@@ -6,7 +6,6 @@ class CreateCreateCourses < ActiveRecord::Migration
       t.string :privacy , null: false
       t.text :tags, null: false
       t.text :objectives, null: false
-      
       t.timestamps null: false
     end
   end

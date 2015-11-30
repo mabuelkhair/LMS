@@ -1,8 +1,21 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Create Courses</h1>
+<style>
+td {
+    border: 1px solid black;
+    color: white;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+a:visited{
+  color: green;
+  font-weight: bold;
+}
 
-<table>
+</style>
+<table cellspacing="10">
   <thead>
     <tr>
       <th colspan="3"></th>
@@ -10,8 +23,10 @@
   </thead>
 
   <tbody>
+
     <% @create_courses.each do |create_course| %>
       <tr>
+        <td> Course Name: <%=create_course.name%></td>
         <td><%= link_to 'Show', create_course %></td>
         <td><%= link_to 'Edit', edit_create_course_path(create_course) %></td>
         <td><%= link_to 'Destroy', create_course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
