@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
 
+  resources :create_courses
   get 'home/index'
 
   get 'home/about'
 
   get 'home/contact'
   
+  get 'teacher/home'
+
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
