@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20151130204428) do
     t.string   "privacy",     limit: 255,   null: false
     t.text     "tags",        limit: 65535, null: false
     t.text     "objectives",  limit: 65535, null: false
+    t.integer  "owner_id",    limit: 4
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
