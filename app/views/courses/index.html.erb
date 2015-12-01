@@ -24,12 +24,12 @@ a:visited{
 
   <tbody>
 
-    <% @create_courses.each do |create_course| %>
+    <% @courses.each do |course| %>
       <tr>
-        <td> Course Name: <%=create_course.name%></td>
-        <td><%= link_to 'Show', create_course %></td>
-        <td><%= link_to 'Edit', edit_create_course_path(create_course) %></td>
-        <td><%= link_to 'Destroy', create_course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td> Course Name: <%=course.name%></td>
+        <td><%= link_to 'Show', course %></td>
+        <td><%= link_to 'Edit', edit_course_path(course) %></td>
+        <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -37,4 +37,4 @@ a:visited{
 
 <br>
 
-<%= link_to 'New Create course', new_create_course_path %>
+<%= link_to 'New Create course', new_course_path %>

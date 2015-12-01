@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :create_courses
+  resources :courses
   get 'home/index'
 
   get 'home/about'
