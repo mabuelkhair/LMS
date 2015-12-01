@@ -1,5 +1,30 @@
 <h1>Editing Create Course</h1>
+<style> 
+p{
+  font-weight: bold;
+  color:white;
+  }
+  </style>
 
+
+
+  <%= form_tag "/courses/"+params[:id], :name => "update", :method => "put" do %>
+
+
+      <p>Name</p>
+      <input type="text" class="form-control" name="course[name]" value=<%=@course.name%> >
+      <p> Description</p>
+      <input type="text" class="form-control" name="course[description]" value=<%=@course.description%>>
+      <p> Privacy</p>
+      <input type="text" class="form-control" name="course[privacy]" value=<%=@course.privacy%>>
+      <p> Tags</p>
+      <input type="text" class="form-control" name="course[tags]" value=<%=@course.tags%>>
+      <p>Objectives</p>
+      <input type="text" class="form-control" name="course[objectives]" value=<%=@course.objectives%>>
+      <input type="submit" value="update">
+
+
+<% end %>
 <%= render 'form' %>
 
 <%= link_to 'Show', @course %> |
