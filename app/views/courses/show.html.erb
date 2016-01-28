@@ -1,23 +1,11 @@
 <p id="notice"><%= notice %></p>
-<style> 
-p{
-  font-weight: bold;
-  color:white;
-  }
-  </style>
-
-
 <p> Course Name: <%=@course.name%> </p>
 <p> Course Description :<%=@course.description%> </p>
 <p>Course privacy :<%=@course.privacy%></p>
 <p>Course tags :<%=@course.tags%></p>
 <p>Course objectives :<%=@course.objectives%></p>
-
-
-
-	<a href="/course">
-		<button class="btn btn-primary btn-lg" >view students</button>
-	</a>
-	
+<a href="/course">
+	<button class="btn btn-primary btn-lg" >view students</button>
+</a>	
 <%= link_to 'Edit', edit_course_path(@course) %> |
 <%= link_to 'Back', courses_path %>

@@ -4,7 +4,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
-
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -12,46 +11,7 @@ html {
 }
 body {
   margin: 0;
-     background: -webkit-linear-gradient(90deg, #16222A 10%, #3A6073 90%);
-    /* Chrome 10+, Saf5.1+ */
-    background: -moz-linear-gradient(90deg, #16222A 10%, #3A6073 90%);
-    /* FF3.6+ */
-    background: -ms-linear-gradient(90deg, #16222A 10%, #3A6073 90%);
-    /* IE10 */
-    background: -o-linear-gradient(90deg, #16222A 10%, #3A6073 90%);
-    /* Opera 11.10+ */
-    background: linear-gradient(90deg, #16222A 10%, #3A6073 90%);
-    /* W3C */
-    font-family: 'Raleway', sans-serif;
 }
-.fe_container{
-  color: white;
-}
-.middlePage {
-    width: 680px;
-    height: 500px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-}
-.setBackground{
-     margin: 0;
-       background: -webkit-linear-gradient(90deg, #16222A 10%, #3A6073 90%);
-    /* Chrome 10+, Saf5.1+ */
-    background: -moz-linear-gradient(90deg, #16222A 10%, #3A6073 90%);
-    /* FF3.6+ */
-    background: -ms-linear-gradient(90deg, #16222A 10%, #3A6073 90%);
-    /* IE10 */
-    background: -o-linear-gradient(90deg, #16222A 10%, #3A6073 90%);
-    /* Opera 11.10+ */
-    background: linear-gradient(90deg, #16222A 10%, #3A6073 90%);
-    /* W3C */
-    font-family: 'Raleway', sans-serif;
-}
-
 article,
 aside,
 details,
