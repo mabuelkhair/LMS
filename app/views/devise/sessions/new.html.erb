@@ -1,84 +1,46 @@
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div class="setBackground">
-    <div class="middlePage">
-        <div class="page-header">
-            <h1 class="logo">NAEMO <small>Welcome to our LMS!</small></h1> </div>
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Please Sign In</h3> </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-5">
-                        <a href="#"><img src="http://techulus.com/buttons/fb.png" /></a>
-                        <br/>
-                        <a href="#"><img src="http://techulus.com/buttons/tw.png" /></a>
-                        <br/>
-                        <a href="#"><img src="http://techulus.com/buttons/gplus.png" /></a>
-                    </div>
-                    <div class="col-md-7" style="border-left:1px solid #ccc;height:160px">
-                        <form  form class="new_user" id="new_user" action="/users/sign_in" accept-charset="UTF-8" method="post" >
-                            <fieldset>
-                                <input name="user[email]" id="user_email"  type="text" placeholder="Enter Your Email" class="form-control input-md" />
-                                <br>
-                                <input name="user[password]" id="user_password"  type="password" placeholder="Enter Password" class="form-control input-md">
-                                <% if devise_mapping.rememberable? -%>
-                                <div class="field">
-                                    <input type="checkbox" name="user[remember_me]" id="user_remember_me" value="1"><small> Remember me</small></div>
-                                    <% end -%>
-                                <!-- <div class="spacing"><a href="#"><small data-toggle="modal" data-target="#myModal"> Forgot Password?</small></a> -->
-                                <a class="spacing" href="/users/password/new"> <small>Forgot your password?</small></a>
-                                <br/>
-                                    <a href="/users/confirmation/new"><small>Didn't receive confirmation instructions?</small></a>
-                                </div>
-                                <button id="singlebutton" name="commit" class="btn btn-info btn-sm pull-right">Sign In</button> 
-                                  <a href="/users/sign_up">
-                                   <button class="btn btn-info btn-sm pull-right">Sign Up</button> </a>
+<body class="login">
 
-                                  
-                                
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
+  <div id="content">
+    <div class="container-fluid">
+
+      <div class="lock-container">
+        <h1>Log in</h1>
+        <div class="panel panel-default text-center">
+          <img src="http://themekit.aws.ipv4.ro/dist/themes/learning/images/people/110/guy-5.jpg" class="img-circle">
+          <div class="panel-body">
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="field">
+              <%= f.label :email %><br />
+              <%= f.email_field :email, autofocus: true,:class => 'form-control' %>
             </div>
+
+            <div class="field">
+              <%= f.label :password %><br />
+              <%= f.password_field :password, autocomplete: "off" ,:class => 'form-control'%>
+            </div>
+
+            <% if devise_mapping.rememberable? -%>
+              <div class="field">
+                <%= f.check_box :remember_me %>
+                <%= f.label :remember_me %>
+              </div>
+            <% end -%>
+
+            <div class="actions">
+              <%= f.submit "Log in" ,:class => 'btn btn-primary' %>
+            </div>
+            <%= render "devise/shared/links" %>
+          <% end %>
+          </div>
         </div>
-    </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Modal sign-up -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Forget Password</h4>
       </div>
-      <div class="modal-body">
-      <form class="new_user" id="new_user" action="/users/password" accept-charset="UTF-8" method="post">
-        <div class="form-group">
-      <label for="usr">Email:</label>
-      <input type="text" class="form-control" name="user[email]" id="user_email">
-    </div>
-    
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <input name="commit" value="Send me reset password instructions" type="submit">
-      </div>
-      </form>
+
     </div>
   </div>
-</div>
-        <% end %>
-                <%= render "devise/background" %>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <strong>ThemeKit</strong> v4.0.0 &copy; Copyright 2015
+  </footer>
+  <!-- // Footer -->
+</body>
