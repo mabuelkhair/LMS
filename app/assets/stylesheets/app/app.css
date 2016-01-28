@@ -19071,7 +19071,7 @@ html.st-layout .st-content {
   padding-bottom: 45px;
 }
 [class*="ls-top-navbar"] .st-container .st-content-inner {
-  padding-top: 30px;
+  /*padding-top: 30px;*/
 }
 .st-pusher {
   position: relative;
