@@ -300,7 +300,9 @@
                     architecto ducimus optio reprehenderit.</span></p>
 
                   <br/>
+                   <% if !user_signed_in? -%>
                   <a class="btn bg-lightred btn-lg" href="/users/sign_up">Sign Up</a>
+                  <% end -%>
                 </div>
               </div>
             </div>
