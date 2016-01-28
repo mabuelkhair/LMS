@@ -1,5 +1,6 @@
-<p id="notice"><%= notice %></p>
-
+<p id="notice">
+    <%= notice %>
+</p>
 <h1>Listing Create Courses</h1>
 <style>
 td {
@@ -8,32 +9,66 @@ td {
     padding-left: 10px;
     padding-right: 10px;
 }
-a:visited{
-  color: green;
-  font-weight: bold;
-}
-
 </style>
 <table cellspacing="10">
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-
-    <% @courses.each do |course| %>
-      <tr>
-        <td> Course Name: <%=course.name%></td>
-        <td><%= link_to 'Show', course %></td>
-        <td><%= link_to 'Edit', edit_course_path(course) %></td>
-        <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+    <thead>
+        <tr>
+            <th colspan="3"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @courses.each do |course| %>
+            <tr>
+                <td> Course Name:
+                    <%=course.name%>
+                </td>
+                <td>
+                    <%= link_to 'Show', course %>
+                </td>
+                <td>
+                    <%= link_to 'Edit', edit_course_path(course) %>
+                </td>
+                <td>
+                    <%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %>
+                </td>
+            </tr>
+            <% end %>
+    </tbody>
 </table>
-
 <br>
-
 <%= link_to 'New Create course', new_course_path %>
+
+    <body class="breakpoint-1024">
+        <div class="container-fluid">
+            <div class="page-header">
+                <h1 class="h3 pull-left margin-none">Courses</h1>
+                
+                <div class="clearfix"></div>
+            </div>
+             <% @courses.each do |course| %>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="media media-clearfix-xs-min">
+                        <div class="media-left"><a href="http://themekit.aws.ipv4.ro/dist/themes/learning/lesson.html"><span class="media-object icon-block bg-default"><i class="fa fa-github"></i></span></a></div>
+                        <div class="media-body">
+                            <h3 class="media-heading h4"><%= link_to  course.name , course%> </h3>
+                            <p class="small text-muted">
+                              <i class="fa fa-clock-o fa-fw"></i>4 hrs
+                              <i class="fa fa-user fa-fw"></i>Adrian Demian 
+                              <i class="fa fa-calendar fa-fw"></i><%=course.created_at%>
+                            </p>
+                            <p><%=course.description%></p>
+                            <span class="label bg-purple">New</span> 
+                            <span class="label bg-gray-dark">New</span> 
+                            <span class="label label-default">WordPress</span> 
+                            <span class="label label-primary">Beginner</span>
+                            <span class="label bg-lightred">New</span> 
+                            <span class="label bg-brown">New</span> 
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <% end %>
+
+        </div>
+    </body>
