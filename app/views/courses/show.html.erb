@@ -31,16 +31,21 @@
             </div>
         </div>
     </div>
-    <h5>Curriculum</h5>
+    <h3>Curriculum</h3>
+    <% @course.chapters.each do |chapter| %>
     <div class="panel panel-default curriculum">
-        <div class="panel-heading panel-heading-gray collapsed" data-toggle="collapse" data-target="#curriculum-2" aria-expanded="false">
+        <div class="panel-heading panel-heading-gray collapsed" data-toggle="collapse" data-target="#curriculum-<%=chapter.id%>" aria-expanded="false">
             <div class="media"><span class="icon-block half pull-left"><i class="fa fa-graduation-cap"></i></span>
                 <div class="media-body">
-                    <h4 class="media-heading">Another Chapter</h4>
-                    <p class="margin-none">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores cumque minima nemo repudiandae rerum! Aspernatur at, autem expedita id illum laudantium molestias officiis quaerat, rem sapiente sint totam velit. Enim.</p>
+                    <h4 class="media-heading"><%=chapter.name %></h4>
+                    <%= link_to 'Edit', edit_chapter_path(chapter) %> 
+                    <%= link_to 'Destroy', chapter, method: :delete, data: { confirm: 'Are you sure?' } %>
+                    <p class="margin-none">
+                        <%=chapter.description%>
+                    </p>
                 </div>
             </div><span class="collapse-status collapse-open">Open</span> <span class="collapse-status collapse-close">Close</span></div>
-        <div class="list-group collapse" id="curriculum-2" aria-expanded="false" style="height: 0px;">
+        <div class="list-group collapse" id="curriculum-<%=chapter.id%>" aria-expanded="false" style="height: 0px;">
             <div class="list-group-item" data-target="lesson.html">
                 <div class="table-responsive">
                     <table class="table table-condensed table-borderless margin-none">
@@ -108,4 +113,15 @@
             </div>
         </div>
     </div>
+    <% end %>
+<h3>New Chapter</h3>
+                 <%= form_tag "/chapters", :name => "new_chapter" do %>
+                  <label >Name</label>
+                  <input type="text" class="form-control" name="chapter[name]" placeholder="Name">
+                  <label >Description</label>
+                  <textarea class="form-control" name="chapter[description]" placeholder="description"></textarea>
+                  <input class="btn btn-primary btn-lg" type="submit" value="Create chapter">
+                  <input type="hidden" name="chapter[course_id]" value="<%=@course.id%>">
+            <% end %>
 </div>
+
