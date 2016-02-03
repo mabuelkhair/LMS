@@ -1,39 +1,111 @@
-    <body class="breakpoint-1024">
-        <div class="container-fluid">
-            <div class="page-header">
-                <h1 class="h3 pull-left margin-none">Courses</h1>
-                
-                <div class="clearfix"></div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="media media-clearfix-xs-min">
-                        <div class="media-left"><a href="http://themekit.aws.ipv4.ro/dist/themes/learning/lesson.html">
-                        <span class="media-object icon-block bg-default"><i class="fa fa-github"></i></span></a></div>
-                        <div class="media-body">
-                            <h3 class="media-heading h4"><%=@course.name%> </h3>
-                            <% if current_user.id==@course.owner.id %>
-                            <%= link_to 'Edit', edit_course_path(@course) %> &nbsp;
-                             <%= link_to 'Destroy', @course, method: :delete, data: { confirm: 'Are you sure?' } %>
-                             <% end %>
-                            <p class="small text-muted">
-                              <i class="fa fa-clock-o fa-fw"></i><%=@course.privacy%>
-                              <i class="fa fa-user fa-fw"></i><%=@course.owner.email%>
-                              <i class="fa fa-calendar fa-fw"></i><%=@course.created_at%>
-                            </p>
-                            <p><%=@course.description%></p>
-                            <% @course.tags.split(",").each do |tag| %>
-                            <span class="label label-default"><%=tag%></span> 
-                           <!--  <span class="label bg-purple">New</span> 
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="media"><span class="pull-right icon-block double media-object bg-lightred"><i class="fa fa-github"></i></span>
+                <div class="media-body">
+                    <h3 class="media-heading h4"><%=@course.name%> </h3>
+                    <% if current_user.id==@course.owner.id %>
+                        <%= link_to 'Edit', edit_course_path(@course) %> &nbsp;
+                            <%= link_to 'Destroy', @course, method: :delete, data: { confirm: 'Are you sure?' } %>
+                                <% end %>
+                                    <p class="small text-muted">
+                                        <i class="fa fa-clock-o fa-fw"></i>
+                                        <%=@course.privacy%>
+                                            <i class="fa fa-user fa-fw"></i>
+                                            <%=@course.owner.email%>
+                                                <i class="fa fa-calendar fa-fw"></i>
+                                                <%=@course.created_at%>
+                                    </p>
+                                    <p>
+                                        <%=@course.description%>
+                                    </p>
+                                    <% @course.tags.split(",").each do |tag| %>
+                                        <span class="label label-default"><%=tag%></span>
+                                        <!--  <span class="label bg-purple">New</span> 
                             <span class="label bg-gray-dark">New</span> 
                             <span class="label label-primary">Beginner</span>
                             <span class="label bg-lightred">New</span> 
                             <span class="label bg-brown">New</span>  -->
-                            <%end%>
-                            </div>
-                    </div>
+                                        <%end%>
                 </div>
             </div>
-
         </div>
-    </body>
+    </div>
+    <h5>Curriculum</h5>
+    <div class="panel panel-default curriculum">
+        <div class="panel-heading panel-heading-gray collapsed" data-toggle="collapse" data-target="#curriculum-2" aria-expanded="false">
+            <div class="media"><span class="icon-block half pull-left"><i class="fa fa-graduation-cap"></i></span>
+                <div class="media-body">
+                    <h4 class="media-heading">Another Chapter</h4>
+                    <p class="margin-none">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores cumque minima nemo repudiandae rerum! Aspernatur at, autem expedita id illum laudantium molestias officiis quaerat, rem sapiente sint totam velit. Enim.</p>
+                </div>
+            </div><span class="collapse-status collapse-open">Open</span> <span class="collapse-status collapse-close">Close</span></div>
+        <div class="list-group collapse" id="curriculum-2" aria-expanded="false" style="height: 0px;">
+            <div class="list-group-item" data-target="lesson.html">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-borderless margin-none">
+                        <tbody>
+                            <tr>
+                                <td class="w50">1.</td>
+                                <td>Installation</td>
+                                <td class="text-right">2:03 min</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="list-group-item active" data-target="lesson.html">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-borderless margin-none">
+                        <tbody>
+                            <tr>
+                                <td class="w50">2.</td>
+                                <td>M-V-Huh?</td>
+                                <td class="text-right">25:01 min</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="list-group-item" data-target="lesson.html">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-borderless margin-none">
+                        <tbody>
+                            <tr>
+                                <td class="w50">3.</td>
+                                <td>Models</td>
+                                <td class="text-right">12:10 min</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="list-group-item" data-target="lesson.html">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-borderless margin-none">
+                        <tbody>
+                            <tr>
+                                <td class="w50">4.</td>
+                                <td>Database Access</td>
+                                <td class="text-right">1:25 min</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="list-group-item" data-target="lesson.html">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-borderless margin-none">
+                        <tbody>
+                            <tr>
+                                <td class="w50">5.</td>
+                                <td>Eloquent Basics</td>
+                                <td class="text-right">22:30 min</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
