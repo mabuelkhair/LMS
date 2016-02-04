@@ -1,0 +1,50 @@
+<body class="login">
+
+<div id="content">
+   <div class="container-fluid">
+      <div class="lock-container">
+         <h1 style="color: black">Update Course</h1>
+         <div class="panel panel-default text-center">
+            <br>
+            <div class="panel-body">
+               <%= form_tag "/courses/"+params[:id], :name => "update", :method => "put" do %>
+                  <label >Name</label>
+                  <input type="text" class="form-control" name="course[name]" value=<%=@course.name%>>
+                  <label >Description</label>
+                  <textarea class="form-control" name="course[description]" placeholder="description"><%=@course.description%></textarea><br>
+                  <label >Privacy</label>
+                  <select class="form-control" id="sel1" name="course[privacy]">
+                  <option value=<%=@course.privacy%> hidden selected><%=@course.privacy%></option>
+                  <option value="public">public</option>
+                  <option value="private">private</option>
+                  </select><br>
+                  <!-- <input type="text" class="form-control"  placeholder="privacy"> -->
+                  <label >Fields of interests</label>
+                  <input type="text" class="form-control" name="course[tags]" placeholder="fields of interests" value=<%=@course.tags%> >
+                  <label >Learning objective</label>
+                  <textarea type="text" class="form-control" name="course[objectives]" placeholder="learning objective"><%=@course.objectives%></textarea>
+                  <input class="btn btn-primary btn-lg" type="submit" value="Update">
+            <% end %>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</body>
+
+
+
+
+      <% if @course.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@course.errors.count, "error") %> prohibited this article from being saved:</h2>
+ 
+    <ul>
+    <% @course.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+</div>

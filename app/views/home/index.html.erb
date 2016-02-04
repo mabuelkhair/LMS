@@ -1,47 +1,5 @@
 <!-- Wrapper required for sidebar transitions -->
-  <div class="st-container">
-
-    <!-- Fixed navbar -->
-    <div class="navbar navbar-main navbar-primary navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a href="#sidebar-chat" data-toggle="sidebar-menu" class="toggle pull-right visible-xs"><i class="fa fa-comments"></i></a>
-          <a class="navbar-brand" href="index.html">Learning</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="main-nav">
-          <ul class="nav navbar-nav">
-            <li><a href="/home/about">About</a></li>
-            <li><a href="/home/contact">Contact</a></li>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="hidden-xs">
-              <a href="#sidebar-chat" data-toggle="sidebar-menu">
-                <i class="fa fa-comments"></i>
-              </a>
-            </li>
-
-            <% if user_signed_in? -%>
-
-            <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %> </li>
-            <% else %>
-
-            <li><a href="/users/sign_in">Log In</a></li>
-            <%end%>
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-
-      </div>
-    </div>
+  
 
     <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
     <div class="sidebar sidebar-chat right sidebar-size-2 sidebar-offset-0 chat-skin-white sidebar-visible-mobile" id=sidebar-chat>
@@ -284,8 +242,7 @@
       <!-- this is the wrapper for the content -->
       <div class="st-content">
 
-        <!-- extra div for emulating position:fixed of the menu -->
-        <div class="st-content-inner">
+        
 
           <div class="cover overlay cover-image-full home">
             <img src="/photodune-6745579-modern-creative-man-relaxing-on-workspace-m.jpg" alt="" />
@@ -437,59 +394,19 @@
 
           </div>
 
-        </div>
-        <!-- /st-content-inner -->
 
       </div>
       <!-- /st-content -->
 
-    </div>
     <!-- /st-pusher -->
 
     <!-- Footer -->
-    <footer class="footer">
+  <!--   <footer class="footer">
       <strong>ThemeKit</strong> v4.0.0 &copy; Copyright 2015
-    </footer>
+    </footer> -->
     <!-- // Footer -->
 
-  </div>
+  
   <!-- /st-container -->
 
   <!-- Inline Script for colors and config objects; used by various external scripts; -->
-  <script>
-    var colors = {
-      "danger-color": "#e74c3c",
-      "success-color": "#81b53e",
-      "warning-color": "#f0ad4e",
-      "inverse-color": "#2c3e50",
-      "info-color": "#2d7cb5",
-      "default-color": "#6e7882",
-      "default-light-color": "#cfd9db",
-      "purple-color": "#9D8AC7",
-      "mustard-color": "#d4d171",
-      "lightred-color": "#e15258",
-      "body-bg": "#f6f6f6"
-    };
-    var config = {
-      theme: "learning",
-      skins: {
-        "default": {
-          "primary-color": "#16ae9f"
-        },
-        "orange": {
-          "primary-color": "#e74c3c"
-        },
-        "blue": {
-          "primary-color": "#4687ce"
-        },
-        "purple": {
-          "primary-color": "#af86b9"
-        },
-        "brown": {
-          "primary-color": "#c3a961"
-        }
-      }
-    };
-  </script>
-  <script src="js/vendor/all.js"></script>
-  <script src="js/app/app.js"></script>

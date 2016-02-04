@@ -1,0 +1,43 @@
+    <body class="breakpoint-1024">
+        <div class="container-fluid">
+            <div class="page-header">
+                <h1 class="h3 pull-left margin-none">Courses</h1>
+                
+                <div class="clearfix"></div>
+            </div>
+             <% @courses.each do |course| %>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="media media-clearfix-xs-min">
+                        <div class="media-left"><a href="http://themekit.aws.ipv4.ro/dist/themes/learning/lesson.html"><span class="media-object icon-block bg-default"><i class="fa fa-github"></i></span></a></div>
+                        <div class="media-body">
+                            <h3 class="media-heading h4"><%= link_to  course.name , course%> </h3>
+                            <% if current_user.id==course.owner.id %>
+                            <%= link_to 'Edit', edit_course_path(course) %> &nbsp;
+                             <%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %>
+                             <% end %>
+                            <p class="small text-muted">
+                              <!-- <i class="fa fa-clock-o fa-fw"></i>4 hrs -->
+                              <i class="fa fa-user fa-fw"></i><%=course.owner.email%>
+                              <i class="fa fa-calendar fa-fw"></i><%=course.created_at%>
+                            </p>
+                            <p><%=course.description%></p>
+                           <% course.tags.split(",").each do |tag| %>
+                            <span class="label label-default"><%=tag%></span> 
+                           <!--  <span class="label bg-purple">New</span> 
+                            <span class="label bg-gray-dark">New</span> 
+                            <span class="label label-primary">Beginner</span>
+                            <span class="label bg-lightred">New</span> 
+                            <span class="label bg-brown">New</span>  -->
+                            <%end%>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <% end %>
+
+        <a href="/courses/new">
+        <button class="btn btn-primary btn-lg" type="submit" >Create Course</button>
+        </a>
+        </div>
+    </body>

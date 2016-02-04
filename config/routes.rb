@@ -1,17 +1,22 @@
 Rails.application.routes.draw do
 
+  resources :chapters
+  resources :courses
   get 'home/index'
 
   get 'home/about'
 
   get 'home/contact'
   
+  get 'teacher/home'
+
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   root 'home#index'
+  # delete "/logout" => "devise/sessions#destroy"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
