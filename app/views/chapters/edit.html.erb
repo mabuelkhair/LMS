@@ -1,5 +1,5 @@
 <body class="login">
-<% if current_user.id!=@chapter.course.owner_id %>
+<% if current_user.id!=@chapter.course.owner_id && current_user.is_admin!=1%>
 <% controller.redirect_to courses_path %>
 <% end %>
 <div id="content">
