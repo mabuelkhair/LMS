@@ -38,11 +38,13 @@
                 <div class="media"><span class="icon-block half pull-left"><i class="fa fa-graduation-cap"></i></span>
                     <div class="media-body">
                         <h4 class="media-heading"><%=chapter.name %></h4>
+                        <% if current_user.id==@course.owner.id %>
                         <%= link_to 'Edit', edit_chapter_path(chapter) %>
                             <%= link_to 'Destroy', chapter, method: :delete, data: { confirm: 'Are you sure?' } %>
                                 <p class="margin-none">
                                     <%=chapter.description%>
                                 </p>
+                    <% end %>
                     </div>
                 </div><span class="collapse-status collapse-open">Open</span> <span class="collapse-status collapse-close">Close</span></div>
             <div class="list-group collapse" id="curriculum-<%=chapter.id%>" aria-expanded="false" style="height: 0px;">
