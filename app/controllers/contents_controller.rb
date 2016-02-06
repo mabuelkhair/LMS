@@ -28,8 +28,10 @@ class ContentsController < ApplicationController
 
     respond_to do |format|
       if @content.save
-        format.html { redirect_to @content, notice: 'Content was successfully created.' }
-        format.json { render :show, status: :created, location: @content }
+        format.html { redirect_to :action => 'show', id: @content.chapter.course_id ,:controller=>"courses", notice: 'Chapter was successfully created.' }
+        
+        # format.html { redirect_to @content, notice: 'Content was successfully created.' }
+        # format.json { render :show, status: :created, location: @content }
       else
         format.html { render :new }
         format.json { render json: @content.errors, status: :unprocessable_entity }
@@ -56,8 +58,9 @@ class ContentsController < ApplicationController
   def destroy
     @content.destroy
     respond_to do |format|
-      format.html { redirect_to contents_url, notice: 'Content was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to :action => 'show', id: @content.chapter.course_id ,:controller=>"courses", notice: 'Chapter was successfully created.' }
+      # format.html { redirect_to contents_url, notice: 'Content was successfully destroyed.' }
+      # format.json { head :no_content }
     end
   end
 
