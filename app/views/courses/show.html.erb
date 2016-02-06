@@ -4,7 +4,7 @@
             <div class="media"><span class="pull-right icon-block double media-object bg-lightred"><i class="fa fa-github"></i></span>
                 <div class="media-body">
                     <h3 class="media-heading h4"><%=@course.name%> </h3>
-                    <% if current_user.id==@course.owner.id ||current_user.is_admin=1%>
+                    <% if current_user.id==@course.owner.id ||current_user.is_admin==1%>
                         <%= link_to 'Edit', edit_course_path(@course) %> &nbsp;
                             <%= link_to 'Destroy', @course, method: :delete, data: { confirm: 'Are you sure?' } %>
                                 <% end %>
@@ -38,7 +38,7 @@
                 <div class="media"><span class="icon-block half pull-left"><i class="fa fa-graduation-cap"></i></span>
                     <div class="media-body">
                         <h4 class="media-heading"><%=chapter.name %></h4>
-                        <% if current_user.id==@course.owner.id ||current_user.is_admin=1 %>
+                        <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
                         <%= link_to 'Edit', edit_chapter_path(chapter) %>
                             <%= link_to 'Destroy', chapter, method: :delete, data: { confirm: 'Are you sure?' } %>
                                 <p class="margin-none">
@@ -116,7 +116,7 @@
             </div>
         </div>
         <% end %>
-            <% if current_user.id==@course.owner.id ||current_user.is_admin=1 %>
+            <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
                
             <h3>New Chapter</h3>
                 <%= form_tag "/chapters", :name => "new_chapter" do %>
