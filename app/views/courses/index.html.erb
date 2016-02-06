@@ -12,7 +12,7 @@
                         <div class="media-left"><a href="http://themekit.aws.ipv4.ro/dist/themes/learning/lesson.html"><span class="media-object icon-block bg-default"><i class="fa fa-github"></i></span></a></div>
                         <div class="media-body">
                             <h3 class="media-heading h4"><%= link_to  course.name , course%> </h3>
-                            <% if current_user.id==course.owner.id %>
+                            <% if current_user.id==course.owner.id || current_user.is_admin==1 %>
                             <%= link_to 'Edit', edit_course_path(course) %> &nbsp;
                              <%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %>
                              <% end %>

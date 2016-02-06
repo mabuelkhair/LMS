@@ -1,5 +1,7 @@
 <body class="login">
-
+<% if current_user.id!=@course.owner.id &&current_user.is_admin!=1 %>
+<% controller.redirect_to courses_path %>
+<% end %>
 <div id="content">
    <div class="container-fluid">
       <div class="lock-container">
