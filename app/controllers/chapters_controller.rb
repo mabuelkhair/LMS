@@ -19,10 +19,10 @@ class ChaptersController < ApplicationController
 
   # GET /chapters/1/edit
   def edit
-        if current_user.id!=@chapter.course.owner_id
+    if current_user.id!=@chapter.course.owner_id
       respond_to do |format|
         format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
-      end
+    end
       return false
     end
   end
@@ -68,6 +68,12 @@ class ChaptersController < ApplicationController
   # DELETE /chapters/1
   # DELETE /chapters/1.json
   def destroy
+    if current_user.id!=@chapter.course.owner_id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+    end
+      return false
+    end
     @chapter.destroy
     respond_to do |format|
       format.html { redirect_to :action => 'show', id: @chapter.course_id ,:controller=>"courses", notice: 'Chapter was successfully created.' }

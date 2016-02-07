@@ -66,6 +66,12 @@ class CoursesController < ApplicationController
   # DELETE /courses/1
   # DELETE /courses/1.json
   def destroy
+        if current_user.id!=@course.owner.id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
     @course.destroy
     respond_to do |format|
       format.html { redirect_to courses_url, notice: 'Create course was successfully destroyed.' }
