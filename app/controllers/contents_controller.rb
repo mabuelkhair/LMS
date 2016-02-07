@@ -26,6 +26,21 @@ class ContentsController < ApplicationController
   def create
     @content = Content.new(content_params)
 
+    chapter=Chapter.find_by(id: @content.chapter_id)
+    if chapter==nil
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
+
+   if Course.find_by(id: (chapter.course_id)).owner_id!=current_user.id 
+      respond_to do |format|
+        format.html { redirect_to :action => 'index',:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+    return false
+   end 
+
     respond_to do |format|
       if @content.save
         format.html { redirect_to :action => 'show', id: @content.chapter.course_id ,:controller=>"courses", notice: 'Chapter was successfully created.' }
