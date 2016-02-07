@@ -31,94 +31,10 @@
             </div>
         </div>
     </div>
-    <h3>Curriculum</h3>
-    <% @course.chapters.each do |chapter| %>
-        <div class="panel panel-default curriculum">
-            <div class="panel-heading panel-heading-gray collapsed" data-toggle="collapse" data-target="#curriculum-<%=chapter.id%>" aria-expanded="false">
-                <div class="media"><span class="icon-block half pull-left"><i class="fa fa-graduation-cap"></i></span>
-                    <div class="media-body">
-                        <h4 class="media-heading"><%=chapter.name %></h4>
-                        <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
-                        <%= link_to 'Edit', edit_chapter_path(chapter) %>
-                            <%= link_to 'Destroy', chapter, method: :delete, data: { confirm: 'Are you sure?' } %>
-                                <p class="margin-none">
-                                    <%=chapter.description%>
-                                </p>
-                    <% end %>
-                    </div>
-                </div><span class="collapse-status collapse-open">Open</span> <span class="collapse-status collapse-close">Close</span></div>
-            <div class="list-group collapse" id="curriculum-<%=chapter.id%>" aria-expanded="false" style="height: 0px;">
-                <div class="list-group-item" data-target="lesson.html">
-                    <div class="table-responsive">
-                        <table class="table table-condensed table-borderless margin-none">
-                            <tbody>
-                                <tr>
-                                    <td class="w50">1.</td>
-                                    <td>Installation</td>
-                                    <td class="text-right">2:03 min</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="list-group-item active" data-target="lesson.html">
-                    <div class="table-responsive">
-                        <table class="table table-condensed table-borderless margin-none">
-                            <tbody>
-                                <tr>
-                                    <td class="w50">2.</td>
-                                    <td>M-V-Huh?</td>
-                                    <td class="text-right">25:01 min</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="list-group-item" data-target="lesson.html">
-                    <div class="table-responsive">
-                        <table class="table table-condensed table-borderless margin-none">
-                            <tbody>
-                                <tr>
-                                    <td class="w50">3.</td>
-                                    <td>Models</td>
-                                    <td class="text-right">12:10 min</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="list-group-item" data-target="lesson.html">
-                    <div class="table-responsive">
-                        <table class="table table-condensed table-borderless margin-none">
-                            <tbody>
-                                <tr>
-                                    <td class="w50">4.</td>
-                                    <td>Database Access</td>
-                                    <td class="text-right">1:25 min</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="list-group-item" data-target="lesson.html">
-                    <div class="table-responsive">
-                        <table class="table table-condensed table-borderless margin-none">
-                            <tbody>
-                                <tr>
-                                    <td class="w50">5.</td>
-                                    <td>Eloquent Basics</td>
-                                    <td class="text-right">22:30 min</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <% end %>
+    <div class="panel panel-default">
+        <div class="panel-body">
             <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
-               
-            <h3>New Chapter</h3>
+                <h3>New Chapter</h3>
                 <%= form_tag "/chapters", :name => "new_chapter" do %>
                     <label>Name</label>
                     <input type="text" class="form-control" name="chapter[name]" placeholder="Name">
@@ -127,5 +43,47 @@
                     <input class="btn btn-primary btn-lg" type="submit" value="Create chapter">
                     <input type="hidden" name="chapter[course_id]" value="<%=@course.id%>">
                     <% end %>
-            <% end %>
+                        <% end %>
+        </div>
+    </div>
+    <% @course.chapters.each do |chapter| %>
+    <div class="panel panel-default curriculum">
+        <div class="panel-heading panel-heading-gray collapsed" data-toggle="collapse" data-target="#curriculum-<%=chapter.id%>" aria-expanded="false">
+            <div class="media"><span class="icon-block half pull-left"><i class="fa fa-graduation-cap"></i></span>
+                <div class="media-body">
+                    <h4 class="media-heading"><%=chapter.name %></h4>
+                     <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
+                            <%= link_to 'Upload Content', new_content_path(:id => chapter.id)%>
+                            <br>
+                            <%= link_to 'Edit', edit_chapter_path(chapter) %>
+                            <%= link_to 'Destroy', chapter, method: :delete, data: { confirm: 'Are you sure?' } %>
+                    <% end %>
+                    <p class="margin-none"><%=chapter.description%></p>
+                </div>
+
+            </div>
+            <span class="collapse-status collapse-open">Open</span>
+             <span class="collapse-status collapse-close">Close</span>
+        </div>
+        <div class="list-group collapse" id="curriculum-<%=chapter.id%>" aria-expanded="false" style="height: 0px;">
+            <% chapter.contents.each do |content| %>
+            <div class="list-group-item active" data-target="lesson.html">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-borderless margin-none">
+                        <tbody>
+                            <tr>
+                                <td class="w50"> <%= content.name %></td>
+                                <td><%= link_to "Open content", content.attachment_url %></td>
+                                <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
+                                <td class="text-right"><%= button_to "Delete",  content, method: :delete, class: "btn btn-danger", confirm: "Are you sure that you wish to delete #{content.name}?" %></td>
+                                <%end%>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <%end%>
+        </div>
+    </div>
+    <%end%>
 </div>
