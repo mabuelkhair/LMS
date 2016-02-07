@@ -1,3 +1,6 @@
+<% if Course.find_by(id: (Chapter.find_by(id: params[:id]).course_id)).owner_id!=current_user.id %>
+<% controller.redirect_to courses_path %>
+<% end %>
 <% if !@content.errors.empty? %>
    <div class = "alert alert-error">
       
