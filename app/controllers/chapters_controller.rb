@@ -19,6 +19,12 @@ class ChaptersController < ApplicationController
 
   # GET /chapters/1/edit
   def edit
+        if current_user.id!=@chapter.course.owner_id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
   end
 
   # POST /chapters
@@ -39,6 +45,13 @@ class ChaptersController < ApplicationController
   # PATCH/PUT /chapters/1
   # PATCH/PUT /chapters/1.json
   def update
+    if current_user.id!=@chapter.course.owner_id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
+
     respond_to do |format|
       if @chapter.update(chapter_params)
         format.html { redirect_to :action => 'show', id: @chapter.course_id ,:controller=>"courses", notice: 'Chapter was successfully created.' }
