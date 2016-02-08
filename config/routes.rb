@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'journal/browse'
+
   resources :contents
   resources :chapters
   resources :courses
