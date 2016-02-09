@@ -36,6 +36,7 @@
                                     </div>
                                 </div>
                             </div>
+                         <% @articles.each do |article| %>
                             <div class="col-xs-12 col-md-6 col-lg-4 item">
                                 <div class="timeline-block">
                                     <div class="panel panel-default">
@@ -58,13 +59,15 @@
                                         </div>
 
                                         <div class="panel-body">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad blanditiis perspiciatis praesentium quaerat repudiandae soluta? Cum doloribus esse et eum facilis impedit officiis omnis optio, placeat, quia quo reprehenderit sunt velit? Asperiores cumque deserunt eveniet hic reprehenderit sit, ut voluptatum?</p>
+                                            <p>
+                                                <!-- content here -->
+                                            </p>
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
-
+                        <%end%>
                       
                         </div>
 
