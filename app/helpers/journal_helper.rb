@@ -9,7 +9,7 @@ module JournalHelper
 
 		def get(params = {})
 			addressable = Addressable::URI.new
-			addressable.query_values = params.merge({ format: "json",:'api-key' => "e2c6bc96-97b0-407a-9a26-0c83e2b0d2c8" })
+			addressable.query_values = params.merge({ format: "json",:'api-key' => "e2c6bc96-97b0-407a-9a26-0c83e2b0d2c8",:'order-by' => "newest",:'page-size' => 50 })
 			self.parse(HTTParty.get("#{@url}/#{resource}?#{addressable.query}"))
 		end
 

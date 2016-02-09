@@ -24,8 +24,11 @@
                                         <div class="panel-heading panel-heading-gray title">
                                             Whats your interests?
                                         </div>
+                                        <%= form_tag("/journal/set_interests", method: "post") do %>
                                         <div class="panel-body">
-                                            <textarea name="status" class="form-control share-text" rows="3" placeholder="write your interests in hashtags like #games #java #business..."></textarea>
+                                        
+                                            <textarea name="interests" class="form-control share-text" rows="3" placeholder="write your interests in hashtags like #games #java #business..."></textarea>
+                                        
                                         </div>
 
                                         <div class="panel-footer share-buttons">
@@ -33,40 +36,43 @@
 	                          	              <button type="submit" class="btn btn-primary btn-md display-none" href="#">Post</button>
 	                                        </center>
                                         </div>
+                                        <% end %>
                                     </div>
                                 </div>
                             </div>
                          <% @articles.each do |article| %>
-                            <div class="col-xs-12 col-md-6 col-lg-4 item">
+                         
+                            <div class="col-xs-12 col-md-6 col-lg-4 item" >
                                 <div class="timeline-block">
+
                                     <div class="panel panel-default">
 
                                         <div class="panel-heading">
                                             <div class="media">
                                                 <div class="media-left">
-                                                    <a href="#">
-                                                        <img src="images/people/50/guy-2.jpg" class="media-object">
-                                                    </a>
                                                 </div>
                                                 <div class="media-body">
                                                     <a href="#" class="pull-right text-muted"><i class="icon-reply-all-fill fa fa-2x "></i></a>
 
-                                                    <a href="#">Jonathan</a>
+                                                    <a target="_blank" href="<%= article["webUrl"] %>"><%= article["sectionName"] %></a>
 
-                                                    <span>on 15th January, 2014</span>
+                                                    <span>on <%= article["webPublicationDate"].gsub!(/[a-zA-Z]/, ' ') %></span>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="panel-body">
-                                            <p>
-                                                <!-- content here -->
-                                            </p>
+                                            <a target="_blank" href="<%= article["webUrl"] %>">
+                                                <p>
+                                                   <h2> <%= article["webTitle"] %> </h2>
+                                                </p>
+                                            </a>
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
+                            
                         <%end%>
                       
                         </div>
