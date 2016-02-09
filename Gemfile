@@ -4,8 +4,8 @@ source 'https://rubygems.org'
 gem 'carrierwave', '~>0.9'
 gem 'bootstrap-sass', '~> 2.3.2' 
 gem "font-awesome-rails"
-
 gem 'rails', '4.2.4'
+gem 'hpricot'
 gem 'mysql2', '~> 0.3.18'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
