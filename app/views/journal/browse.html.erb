@@ -1,0 +1,95 @@
+<html class="st-layout ls-top-navbar ls-bottom-footer hide-sidebar sidebar-r2" lang="en">
+<body>
+<!-- Wrapper required for sidebar transitions -->
+    <div class="st-container">
+
+        <!-- content push wrapper -->
+        <div class="st-pusher" id="content">
+
+            <!-- sidebar effects INSIDE of st-pusher: -->
+            <!-- st-effect-3, st-effect-6, st-effect-7, st-effect-8, st-effect-14 -->
+
+            <!-- this is the wrapper for the content -->
+            <div class="st-content">
+
+                <!-- extra div for emulating position:fixed of the menu -->
+                <div class="st-content-inner">
+
+                    <div class="container">
+                        <div class="timeline row" data-toggle="isotope">
+                            <div class="col-xs-12 col-md-6 col-lg-4 item">
+                            
+                                <div class="timeline-block">
+                                    <div class="panel panel-default share clearfix-xs">
+                                        <div class="panel-heading panel-heading-gray title">
+                                            Whats your interests?
+                                        </div>
+                                        <%= form_tag("/journal/set_interests", method: "post") do %>
+                                        <div class="panel-body">
+                                        
+                                            <textarea name="interests" class="form-control share-text" rows="3" placeholder="write your interests in hashtags like #games #java #business..."></textarea>
+                                        
+                                        </div>
+
+                                        <div class="panel-footer share-buttons">
+	                                        <center>
+	                          	              <button type="submit" class="btn btn-primary btn-md display-none" href="#">Post</button>
+	                                        </center>
+                                        </div>
+                                        <% end %>
+                                    </div>
+                                </div>
+                            </div>
+                         <% @articles.each do |article| %>
+                         
+                            <div class="col-xs-12 col-md-6 col-lg-4 item" >
+                                <div class="timeline-block">
+
+                                    <div class="panel panel-default">
+
+                                        <div class="panel-heading">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                </div>
+                                                <div class="media-body">
+                                                    <a href="#" class="pull-right text-muted"><i class="icon-reply-all-fill fa fa-2x "></i></a>
+
+                                                    <a target="_blank" href="<%= article["webUrl"] %>"><%= article["sectionName"] %></a>
+
+                                                    <span>on <%= article["webPublicationDate"].gsub!(/[a-zA-Z]/, ' ') %></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel-body">
+                                            <a target="_blank" href="<%= article["webUrl"] %>">
+                                                <p>
+                                                   <h2> <%= article["webTitle"] %> </h2>
+                                                </p>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        <%end%>
+                      
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- /st-content-inner -->
+
+            </div>
+            <!-- /st-content -->
+
+        </div>
+        <!-- /st-pusher -->
+<script src="js/vendor/all.js"></script>
+
+<script src="js/app/app.js"></script>
+
+</body>
+</html>
