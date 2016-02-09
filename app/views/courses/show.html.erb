@@ -31,9 +31,9 @@
             </div>
         </div>
     </div>
+    <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
     <div class="panel panel-default">
         <div class="panel-body">
-            <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
                 <h3>New Chapter</h3>
                 <%= form_tag "/chapters", :name => "new_chapter" do %>
                     <label>Name</label>
@@ -42,10 +42,11 @@
                     <textarea class="form-control" name="chapter[description]" placeholder="description"></textarea>
                     <input class="btn btn-primary btn-lg" type="submit" value="Create chapter">
                     <input type="hidden" name="chapter[course_id]" value="<%=@course.id%>">
-                    <% end %>
-                        <% end %>
+                <% end %>
+                        
         </div>
     </div>
+    <% end %>
     <% @course.chapters.each do |chapter| %>
     <div class="panel panel-default curriculum">
         <div class="panel-heading panel-heading-gray collapsed" data-toggle="collapse" data-target="#curriculum-<%=chapter.id%>" aria-expanded="false">
@@ -86,11 +87,12 @@
         </div>
     </div>
     <%end%>
-    <% if related_courses().count%>
-    <h2> Related Course </h2>
+    <% if related_courses().count>0%>
+    <h2 style="text-align: center"> Related Course </h2>
     <%counter=0%>
     <%related_courses.each do |course|%>
-    <%if counter>0%>
+    <%counter=counter+1%>
+    <%if counter>3%>
         <%break%>
     <%end%>
 
@@ -100,13 +102,13 @@
 
                 <div class="panel-heading">
                     <div class="media">
-                        <div class="media-left">
+                        <!-- <div class="media-left">
                             <a href="#">
                                 <img src="images/people/50/guy-2.jpg" class="media-object">
                             </a>
-                        </div>
+                        </div> -->
                         <div class="media-body">
-                            <a href="#"><%=course.name%></a>
+                            <a href="/courses/<%=course.id%>"><%=course.name%></a>
                             <!-- <span>on 15th January, 2014</span> -->
                         </div>
                     </div>

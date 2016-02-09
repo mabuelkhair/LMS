@@ -18,7 +18,7 @@ class CoursesController < ApplicationController
         end
       end
     end
-    @selected
+    @selected.shuffle
   end
   helper_method :related_courses
 
