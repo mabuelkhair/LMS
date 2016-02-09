@@ -21,11 +21,15 @@ class JournalController < ApplicationController
   	interests = params[:interests].scan(/#(\w+)/).flatten
   	interests.each do |interest|
   		if Interest.exists?(:name => interest) then
-  			current_user.interests.append(Interest.where(:name => interest).first)
+  			if !current_user.interests.include?(Interest.where(:name => interest).first) then
+  				current_user.interests.append(Interest.where(:name => interest).first)
+  			end
   		else
   			current_user.interests.create(name: interest)
+  			puts "added"
   		end
   	end
+  	redirect_to url_for(:controller => :journal, :action => :browse)
   end
 
 end
