@@ -47,6 +47,17 @@
         </div>
     </div>
     <% end %>
+    <div class="panel panel-default">
+        <div class="panel-body">
+                <h3>Prerequisites</h3>
+                <%if @course.prerequisites==nil || @course.prerequisites.length==0 %>
+                There is no Prerequisites
+                <%else%>
+                <%=@course.prerequisites%>
+                <%end%>
+
+        </div>
+    </div>
     <% @course.chapters.each do |chapter| %>
     <div class="panel panel-default curriculum">
         <div class="panel-heading panel-heading-gray collapsed" data-toggle="collapse" data-target="#curriculum-<%=chapter.id%>" aria-expanded="false">
