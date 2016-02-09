@@ -1,6 +1,28 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+
+  def related_courses
+    filed_of_intrests = @course.tags.split(/,/)
+    filed_of_intrests=filed_of_intrests.map!(&:downcase)
+    @selected = []
+    courses=Course.all
+    courses.each do |course|
+      course_interests=course.tags.split(/,/)
+      if course.id!= @course.id
+        course_interests.each do |tg|
+          if  filed_of_intrests.include? tg.downcase then
+                 @selected << course
+                 break
+          end
+        end
+      end
+    end
+    @selected.shuffle
+  end
+  helper_method :related_courses
+
+
   # GET /courses
   # GET /courses.json
   def index
