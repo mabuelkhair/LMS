@@ -25,6 +25,9 @@
                   <input type="text" class="form-control" name="course[tags]" placeholder="fields of interests" value=<%=@course.tags%> >
                   <label >Learning objective</label>
                   <textarea type="text" class="form-control" name="course[objectives]" placeholder="learning objective"><%=@course.objectives%></textarea>
+
+                  <label >Prerequisites objective</label>
+                  <textarea type="text" class="form-control" name="course[prerequisites]" placeholder="learning objective"><%=@course.prerequisites%></textarea>
                   <input class="btn btn-primary btn-lg" type="submit" value="Update">
             <% end %>
             </div>
