@@ -1,5 +1,26 @@
-<h1>New Announcement</h1>
+<% if current_user.id!=@course.owner.id &&current_user.is_admin!=1 %>
+	<% controller.redirect_to courses_path %>
+<% end %>
 
-<%= render 'form' %>
+<body class="login">
 
-<%= link_to 'Back', course_announcements_path(@course) %>
+<div id="content">
+   <div class="container-fluid">
+      <div class="lock-container">
+         <h1 style="color: black">New Announcement</h1>
+         <div class="panel panel-default text-center">
+            <br>
+            <div class="panel-body">
+             <%= form_tag "/courses/"+@course.id.to_s+"/announcements", :name => "new_announcement" do %>
+                  <label >Title</label>
+                  <input type="text" class="form-control" name="announcement[title]" placeholder="Name">
+                  <label >Body</label>
+                  <textarea type="text" class="form-control" name="announcement[body]" placeholder="Annoucement Content"></textarea>
+                  <input class="btn btn-primary btn-lg" type="submit" value="create">
+            <% end %>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</body>

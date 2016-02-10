@@ -22,11 +22,23 @@ class AnnouncementsController < ApplicationController
 
   # GET /announcements/1/edit
   def edit
+    if current_user.id!=@course.owner_id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+    end
+      return false
+    end
   end
 
   # POST /announcements
   # POST /announcements.json
   def create
+    if current_user.id!=@course.owner_id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+    end
+      return false
+    end
     @announcement = @course.announcements.new(announcement_params)
 
     respond_to do |format|
@@ -43,6 +55,12 @@ class AnnouncementsController < ApplicationController
   # PATCH/PUT /announcements/1
   # PATCH/PUT /announcements/1.json
   def update
+    if current_user.id!=@course.owner_id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
     respond_to do |format|
       if @announcement.update(announcement_params)
         format.html { redirect_to [@course, @announcement], notice: 'Announcement was successfully updated.' }
@@ -57,6 +75,12 @@ class AnnouncementsController < ApplicationController
   # DELETE /announcements/1
   # DELETE /announcements/1.json
   def destroy
+    if current_user.id!=@course.owner_id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+    end
+      return false
+    end
     @announcement.destroy
     respond_to do |format|
       format.html { redirect_to course_announcements_path(@course), notice: 'Announcement was successfully destroyed.' }

@@ -30,6 +30,12 @@ class ChaptersController < ApplicationController
   # POST /chapters
   # POST /chapters.json
   def create
+    if current_user.id!=@chapter.course.owner_id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
     @chapter = Chapter.new(chapter_params)
     respond_to do |format|
       if @chapter.save
