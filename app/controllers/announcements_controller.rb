@@ -1,6 +1,7 @@
 class AnnouncementsController < ApplicationController
   before_action :set_announcement, only: [:show, :edit, :update, :destroy]
   before_filter :load_course
+  before_action :authenticate_user!
 
 
 
