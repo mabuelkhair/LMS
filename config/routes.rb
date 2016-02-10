@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
 
+  
   get 'journal/browse'
   post 'journal/set_interests'
 
   resources :contents
   resources :chapters
-  resources :courses
+  resources :courses do
+    resources :announcements
+  end
   get 'home/index'
 
   get 'home/about'

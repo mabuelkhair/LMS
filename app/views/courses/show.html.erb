@@ -21,14 +21,11 @@
                                     </p>
                                     <% @course.tags.split(",").each do |tag| %>
                                         <span class="label label-default"><%=tag%></span>
-                                        <!--  <span class="label bg-purple">New</span> 
-                            <span class="label bg-gray-dark">New</span> 
-                            <span class="label label-primary">Beginner</span>
-                            <span class="label bg-lightred">New</span> 
-                            <span class="label bg-brown">New</span>  -->
                                         <%end%>
                 </div>
             </div>
+           <a href="<%=course_announcements_path(@course)%>"> <input class="btn btn-primary btn-ms" type="submit" value="Announcements">
+            </a>
         </div>
     </div>
     <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
