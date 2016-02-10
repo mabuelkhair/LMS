@@ -65,7 +65,7 @@ class AnnouncementsController < ApplicationController
   end
 
   private
-    def load_parent
+    def load_course
       @course = Course.find(params[:course_id])
     end
     # Use callbacks to share common setup or constraints between actions.
