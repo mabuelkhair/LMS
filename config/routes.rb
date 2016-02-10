@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :announcements
   get 'journal/browse'
   post 'journal/set_interests'
 
