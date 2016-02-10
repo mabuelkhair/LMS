@@ -70,6 +70,7 @@ class AnnouncementsController < ApplicationController
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_announcement
+       @course = Course.find(params[:course_id])
       @announcement = @course.announcements.find(params[:id])
     end
 

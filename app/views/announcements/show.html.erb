@@ -10,5 +10,5 @@
   <%= @announcement.body %>
 </p>
 
-<%= link_to 'Edit', edit_announcement_path(@announcement) %> |
-<%= link_to 'Back', announcements_path %>
+<%= link_to 'Edit', edit_course_announcement_path(@course, @announcement)%> |
+<%= link_to 'Back', course_announcements_path(@course) %>
