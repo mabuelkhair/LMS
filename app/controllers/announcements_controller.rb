@@ -1,10 +1,13 @@
 class AnnouncementsController < ApplicationController
   before_action :set_announcement, only: [:show, :edit, :update, :destroy]
+  before_filter :load_course
+
+
 
   # GET /announcements
   # GET /announcements.json
   def index
-    @announcements = Announcement.all
+    @announcements = @course.announcements.all
   end
 
   # GET /announcements/1
@@ -14,7 +17,7 @@ class AnnouncementsController < ApplicationController
 
   # GET /announcements/new
   def new
-    @announcement = Announcement.new
+    @announcement = @course.announcements.new
   end
 
   # GET /announcements/1/edit
@@ -24,11 +27,11 @@ class AnnouncementsController < ApplicationController
   # POST /announcements
   # POST /announcements.json
   def create
-    @announcement = Announcement.new(announcement_params)
+    @announcement = @course.announcements.new(announcement_params)
 
     respond_to do |format|
       if @announcement.save
-        format.html { redirect_to @announcement, notice: 'Announcement was successfully created.' }
+        format.html { redirect_to  [@course, @announcement], notice: 'Announcement was successfully created.' }
         format.json { render :show, status: :created, location: @announcement }
       else
         format.html { render :new }
@@ -42,7 +45,7 @@ class AnnouncementsController < ApplicationController
   def update
     respond_to do |format|
       if @announcement.update(announcement_params)
-        format.html { redirect_to @announcement, notice: 'Announcement was successfully updated.' }
+        format.html { redirect_to [@course, @announcement], notice: 'Announcement was successfully updated.' }
         format.json { render :show, status: :ok, location: @announcement }
       else
         format.html { render :edit }
@@ -56,15 +59,18 @@ class AnnouncementsController < ApplicationController
   def destroy
     @announcement.destroy
     respond_to do |format|
-      format.html { redirect_to announcements_url, notice: 'Announcement was successfully destroyed.' }
+      format.html { redirect_to course_announcements_path(@course), notice: 'Announcement was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
+    def load_parent
+      @course = Course.find(params[:course_id])
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_announcement
-      @announcement = Announcement.find(params[:id])
+      @announcement = @course.announcements.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
