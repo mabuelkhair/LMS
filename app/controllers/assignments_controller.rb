@@ -38,7 +38,7 @@ class AssignmentsController < ApplicationController
     end
       return false
     end
-     @assignment = @course.assignments.new(params[:assignment])
+     @assignment = @course.assignments.new(assignment_params)
 
     respond_to do |format|
       if @assignment.save
@@ -99,6 +99,6 @@ class AssignmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_params
-      params.require(:assignment).permit(:name, :description, :attachment, :due_date)
+      params.require(:assignment).permit(:name, :description, :attachment, :due_date, :course_id)
     end
 end
