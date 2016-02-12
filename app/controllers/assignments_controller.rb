@@ -6,7 +6,7 @@ class AssignmentsController < ApplicationController
   # GET /assignments
   # GET /assignments.json
   def index
-    @assignments = Assignment.all
+    @assignments = @course.assignments.all
   end
 
   # GET /assignments/1
@@ -16,7 +16,7 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments/new
   def new
-    @assignment = Assignment.new
+    @assignment = @course.assignments.new
   end
 
   # GET /assignments/1/edit
@@ -38,11 +38,11 @@ class AssignmentsController < ApplicationController
     end
       return false
     end
-    @assignment = Assignment.new(assignment_params)
+     @assignment = @course.assignments.new(params[:assignment])
 
     respond_to do |format|
       if @assignment.save
-        format.html { redirect_to @assignment, notice: 'Assignment was successfully created.' }
+        format.html { redirect_to [@course, @assignment], notice: 'Assignment was successfully created.' }
         format.json { render :show, status: :created, location: @assignment }
       else
         format.html { render :new }
@@ -62,7 +62,7 @@ class AssignmentsController < ApplicationController
     end
     respond_to do |format|
       if @assignment.update(assignment_params)
-        format.html { redirect_to @assignment, notice: 'Assignment was successfully updated.' }
+        format.html { redirect_to [@course, @assignment], notice: 'Assignment was successfully updated.' }
         format.json { render :show, status: :ok, location: @assignment }
       else
         format.html { render :edit }
@@ -82,7 +82,7 @@ class AssignmentsController < ApplicationController
     end
     @assignment.destroy
     respond_to do |format|
-      format.html { redirect_to assignments_url, notice: 'Assignment was successfully destroyed.' }
+      format.html { redirect_to course_assignments_path(@course), notice: 'Assignment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -94,7 +94,7 @@ class AssignmentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_assignment
       @course = Course.find(params[:course_id])
-      @assignment = Assignment.find(params[:id])
+      @assignment = @course.assignments.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
