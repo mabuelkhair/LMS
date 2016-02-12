@@ -14,17 +14,17 @@
             <div class="panel-body">
 
             <%= form_for [@course, @assignment], html: { multipart: true } do |f| %>
-            <%= f.label :Name %>
-            <%= f.text_field :name %>
-            <%= f.label :Description %>
-            <%= f.text_field :description %>
+            <label for="assignment_Name">Name</label>
+            <input class="form-control" type="text" name="assignment[name]" id="assignment_name">
+            <label for="assignment_Description">Description</label>
+            <input class="form-control" type="text" name="assignment[description]" id="assignment_description">
 
-            <%= f.label :Date %>
-            <%= f.date_field :due_date %>
+            <label for="assignment_Date">Date</label>
+            <input class="form-control" type="date" name="assignment[due_date]" id="assignment_due_date">
             
-            <%= f.label :attachment %>
-            <%= f.file_field :attachment %>
-            <%= f.submit "Save", class: "btn btn-primary" %>
+            <label for="assignment_attachment">Attachment</label>
+            <input class="form-control" type="file" name="assignment[attachment]" id="assignment_attachment">
+            <input type="submit" name="commit" value="Save" class="btn btn-primary">
             <% end %>
             </div>
          </div>

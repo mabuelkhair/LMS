@@ -1,33 +1,49 @@
-<p id="notice"><%= notice %></p>
+<p id="notice">
+    <%= notice %>
+</p>
 
-<h1>Listing Assignments</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Attachment</th>
-      <th>Due date</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @assignments.each do |assignment| %>
-      <tr>
-        <td><%= assignment.name %></td>
-        <td><%= assignment.description %></td>
-        <td><%= assignment.attachment %></td>
-        <td><%= assignment.due_date %></td>
-        <td><%= link_to 'Show', course_assignment_path(@course, assignment)%></td>
-        <td><%= link_to 'Edit', edit_course_assignment_path(@course, assignment)%></td>
-        <td><%= link_to 'Destroy', [@course, assignment], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Assignment', new_course_assignment_path(@course) %>
+<body class="breakpoint-1024">
+    <div class="container-fluid">
+        <div class="page-header">
+            <h1 class="h3 pull-left margin-none">Assignments</h1>
+            <div class="clearfix"></div>
+        </div>
+        <% @assignments.each do |assignment| %>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="media media-clearfix-xs-min">
+                        <div class="media-left"><a href="http://themekit.aws.ipv4.ro/dist/themes/learning/lesson.html"><span class="media-object icon-block bg-default"><i class="fa fa-github"></i></span></a></div>
+                        <div class="media-body">
+                            <h3 class="media-heading h4"><%= assignment.name %></h3>
+                            <% if current_user.id==assignment.course.owner.id %>
+                                <td>
+                                    <%= link_to 'Edit', edit_course_assignment_path(@course, assignment)%>
+                                </td>
+                                <td>
+                                    <%= link_to 'Destroy', [@course, assignment], method: :delete, data: { confirm: 'Are you sure?' } %>
+                                </td>
+                                <% end %>
+                                    <p class="small text-muted">
+                                        <i class="fa fa-clock-o fa-fw"></i>
+                                        <%= assignment.due_date %>
+                                            <i class="fa fa-calendar fa-fw"></i>
+                                            <%= assignment.created_at %>
+                                    </p>
+                                    <p>
+                                        <%= assignment.description %>
+                                    </p>
+                                    <p>
+                                        <%= link_to "Open content", assignment.attachment_url %>
+                                    </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% end %>
+                <% if current_user.id==@course.owner.id %>
+                    <a href="<%=new_course_assignment_path(@course) %>">
+                        <button class="btn btn-primary btn-lg" type="submit">Create Assignment</button>
+                    </a>
+                    <%end%>
+    </div>
+</body>
