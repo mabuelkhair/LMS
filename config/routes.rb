@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :chapters
   resources :courses do
     resources :announcements
+    resources :assignments
   end
   get 'home/index'
 
