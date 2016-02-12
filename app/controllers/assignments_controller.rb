@@ -1,5 +1,7 @@
 class AssignmentsController < ApplicationController
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
+  before_filter :load_course
+  before_action :authenticate_user!
 
   # GET /assignments
   # GET /assignments.json
@@ -19,11 +21,23 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments/1/edit
   def edit
+    if current_user.id!=@course.owner_id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+    end
+      return false
+    end
   end
 
   # POST /assignments
   # POST /assignments.json
   def create
+    if current_user.id!=@course.owner_id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+    end
+      return false
+    end
     @assignment = Assignment.new(assignment_params)
 
     respond_to do |format|
@@ -40,6 +54,12 @@ class AssignmentsController < ApplicationController
   # PATCH/PUT /assignments/1
   # PATCH/PUT /assignments/1.json
   def update
+    if current_user.id!=@course.owner_id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
     respond_to do |format|
       if @assignment.update(assignment_params)
         format.html { redirect_to @assignment, notice: 'Assignment was successfully updated.' }
@@ -54,6 +74,12 @@ class AssignmentsController < ApplicationController
   # DELETE /assignments/1
   # DELETE /assignments/1.json
   def destroy
+    if current_user.id!=@course.owner_id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+    end
+      return false
+    end
     @assignment.destroy
     respond_to do |format|
       format.html { redirect_to assignments_url, notice: 'Assignment was successfully destroyed.' }
@@ -62,8 +88,12 @@ class AssignmentsController < ApplicationController
   end
 
   private
+    def load_course
+      @course = Course.find(params[:course_id])
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_assignment
+      @course = Course.find(params[:course_id])
       @assignment = Assignment.find(params[:id])
     end
 
