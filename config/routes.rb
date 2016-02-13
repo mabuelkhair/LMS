@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :contents
   resources :chapters
+  get '/courses/mycourses' => 'courses#mycourses'
   resources :courses do
     resources :announcements
     resources :assignments

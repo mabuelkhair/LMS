@@ -23,6 +23,10 @@ class CoursesController < ApplicationController
   helper_method :related_courses
 
 
+  def mycourses
+    @courses =Course.where("owner_id = ?", current_user.id);
+  end
+
   # GET /courses
   # GET /courses.json
   def index
