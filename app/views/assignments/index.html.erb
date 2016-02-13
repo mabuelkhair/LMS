@@ -25,16 +25,19 @@
                                 <% end %>
                                     <p class="small text-muted">
                                         <i class="fa fa-clock-o fa-fw"></i>
-                                        <%= assignment.due_date %>
+                                        due: <%= assignment.due_date %>
                                             <i class="fa fa-calendar fa-fw"></i>
-                                            <%= assignment.created_at %>
+                                            created: <%= assignment.created_at.to_s[0..10] %>
                                     </p>
                                     <p>
                                         <%= assignment.description %>
                                     </p>
+                                    <% if assignment.attachment!=nil && assignment.attachment.length>1%>
                                     <p>
+
                                         <%= link_to "Open content", assignment.attachment_url %>
                                     </p>
+                                    <%end%>
                         </div>
                     </div>
                 </div>

@@ -19,8 +19,9 @@
             <label for="assignment_Description">Description</label>
             <input class="form-control" type="text" name="assignment[description]" id="assignment_description">
 
-            <label for="assignment_Date">Date</label>
-            <input class="form-control" type="date" name="assignment[due_date]" id="assignment_due_date">
+            <label for="assignment_Date">Due Date (after today)</label>
+            
+            <input min="<%=(Time.now+1.days).strftime("%Y-%m-%d")%>"class="form-control" type="date" name="assignment[due_date]" id="assignment_due_date">
             
             <label for="assignment_attachment">Attachment</label>
             <input class="form-control" type="file" name="assignment[attachment]" id="assignment_attachment">
@@ -32,3 +33,10 @@
    </div>
 </div>
 </body>
+<% if @assignment.errors.any? %>
+<ul style="text-align: center; color: red;font-size: 15px">
+  <% @assignment.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+</ul>
+<% end %>
