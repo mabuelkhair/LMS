@@ -27,20 +27,23 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="main-nav">
           <ul class="nav navbar-nav">
+            
             <li><a href="/courses">Courses</a></li>
+            <li><a href="/journal/browse">Journal</a></li>
             <li><a href="/home/about">About</a></li>
             <li><a href="/home/contact">Contact</a></li>
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li class="hidden-xs">
+            <!--<li class="hidden-xs">
               <a href="#sidebar-chat" data-toggle="sidebar-menu">
                 <i class="fa fa-comments"></i>
               </a>
-            </li>
-
+            </li>-->
+            
+            
             <% if user_signed_in? -%>
-
+            <li><a href="/courses/mycourses">My Courses</a></li>
             <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %> </li>
             <% else %>
 

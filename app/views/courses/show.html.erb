@@ -26,6 +26,8 @@
             </div>
            <a href="<%=course_announcements_path(@course)%>"> <input class="btn btn-primary btn-ms" type="submit" value="Announcements">
             </a>
+            <a href="<%=course_assignments_path(@course)%>"> <input class="btn btn-primary btn-ms" type="submit" value="Assignments">
+            </a>
         </div>
     </div>
     <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
