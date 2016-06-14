@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy,:join_course]
   before_action :authenticate_user!
 
   def related_courses
@@ -22,6 +22,13 @@ class CoursesController < ApplicationController
   end
   helper_method :related_courses
 
+  def join_course
+    
+    redirect_to(:action => 'show')
+    if  !(@course.students.include? current_user) then
+      @course.students << current_user
+    end
+  end
 
   def mycourses
     @courses =Course.where("owner_id = ?", current_user.id);
