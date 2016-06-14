@@ -44,7 +44,7 @@
             
             <% if user_signed_in? -%>
             <li><a href="/courses/mycourses">My Courses</a></li>
-            <li><a href="/users/studying">Studying</a></li>
+            <li><a href="/courses/studying">Studying</a></li>
             
             <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %> </li>
             <% else %>
