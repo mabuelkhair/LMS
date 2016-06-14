@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy,:join_course]
+  before_action :set_course, only: [:show, :edit, :update, :destroy,:join_course,:join_request,:join_requests]
   before_action :authenticate_user!
 
   def related_courses
@@ -25,15 +25,45 @@ class CoursesController < ApplicationController
   def join_course
     
     redirect_to(:action => 'show')
-    if  !(@course.students.include? current_user) then
-      @course.students << current_user
+
+    if @course.privacy=="public" then
+      if  !(@course.students.include? current_user or @course.owner.id==current_user.id) then
+        @course.students << current_user
+      end
+    end
+  end
+
+  def join_requests
+    # render('requesters')
+    if current_user.id==@course.owner.id then
+      @requests = JoinRequest.where(:course_id => @course.id )
+        puts "#######################################"
+        puts @requests.count
+      @requesters = Hash.new
+      @requests.each  do |request|
+        user = User.find(request.requester_id)
+        @requesters[user.id]=user.email
+        puts "#######################################"
+        puts @requesters
+      end
+    end
+  end
+
+  def join_request
+    redirect_to(:action => 'show')
+    if @course.privacy=="private" then
+      if !(@course.students.include? current_user or @course.owner.id==current_user.id) then
+        if JoinRequest.where(:course_id => @course.id , :requester_id => current_user.id).count==0 then
+          JoinRequest.create(:course_id => @course.id , :requester_id => current_user.id)
+        end
+      end
     end
   end
 
   def studying
     @courses=current_user.courses
   end
-  
+
   def mycourses
     @courses =Course.where("owner_id = ?", current_user.id);
   end

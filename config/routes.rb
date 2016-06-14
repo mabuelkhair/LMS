@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   get '/courses/mycourses' => 'courses#mycourses'
   get '/courses/studying' => 'courses#studying'
   get 'courses/:id/join' =>'courses#join_course'
+  get 'courses/:id/joinrequest' =>'courses#join_request' 
+  get 'courses/:id/requesters' => 'courses#join_requests'
+  # get 'courses/:id/joinrequests' =>'courses#join_requests'
+  
   resources :courses do
     resources :announcements
     resources :assignments
