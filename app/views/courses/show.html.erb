@@ -24,7 +24,7 @@
                                         <%end%>
                 </div>
             </div>
-            <%if in_course() then%>
+            <%if !in_course() then%>
             <a href="/courses/<%=@course.id%>/join"> <input class="btn btn-primary btn-ms" type="submit" value="Join Course">
             </a>
             <%end%>
