@@ -30,6 +30,10 @@ class CoursesController < ApplicationController
     end
   end
 
+  def studying
+    @courses=current_user.courses
+  end
+  
   def mycourses
     @courses =Course.where("owner_id = ?", current_user.id);
   end

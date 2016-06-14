@@ -28,7 +28,7 @@
         <div class="collapse navbar-collapse" id="main-nav">
           <ul class="nav navbar-nav">
             
-            <li><a href="/courses">Courses</a></li>
+            <li><a href="/courses">All Courses</a></li>
             <li><a href="/journal/browse">Journal</a></li>
             <li><a href="/home/about">About</a></li>
             <li><a href="/home/contact">Contact</a></li>
@@ -44,6 +44,8 @@
             
             <% if user_signed_in? -%>
             <li><a href="/courses/mycourses">My Courses</a></li>
+            <li><a href="/users/studying">Studying</a></li>
+            
             <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %> </li>
             <% else %>
 

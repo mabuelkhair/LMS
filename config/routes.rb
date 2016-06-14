@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :contents
   resources :chapters
   get '/courses/mycourses' => 'courses#mycourses'
+  get '/courses/studying' => 'courses#studying'
   get 'courses/:id/join' =>'courses#join_course'
   resources :courses do
     resources :announcements
