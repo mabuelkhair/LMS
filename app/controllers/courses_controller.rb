@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:accept_request,:show, :edit, :update, :destroy,:join_course,:join_request,:join_requests]
+  before_action :set_course, only: [:reject_request,:accept_request,:show, :edit, :update, :destroy,:join_course,:join_request,:join_requests]
   before_action :authenticate_user!
 
   def related_courses
@@ -61,6 +61,15 @@ class CoursesController < ApplicationController
     if current_user.id == @course.owner_id
      req_id=params[:requester_id]
      @course.students << User.find(req_id)
+     JoinRequest.where(:course_id =>@course.id,:requester_id => req_id).destroy_all
+   end
+  end
+
+  def reject_request
+
+    redirect_to(:action => 'join_requests')
+    if current_user.id == @course.owner_id
+     req_id=params[:requester_id]
      JoinRequest.where(:course_id =>@course.id,:requester_id => req_id).destroy_all
    end
   end

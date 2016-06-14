@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   get 'courses/:id/requesters' => 'courses#join_requests'
 
   get 'courses/:id/requesters/accept/:requester_id' => 'courses#accept_request'
+  get 'courses/:id/requesters/reject/:requester_id' => 'courses#reject_request'
+
+
+
   
   # get 'courses/:id/joinrequests' =>'courses#join_requests'
   
