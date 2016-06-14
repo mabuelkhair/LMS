@@ -5,16 +5,22 @@
     <body class="breakpoint-1024">
         <div class="container-fluid">
             <div class="page-header">
-                <h1 class="h3 pull-left margin-none">Courses</h1>
+                <h1 class="h3 pull-left margin-none">Requesters</h1>
                 
                 <div class="clearfix"></div>
             </div>
+            <%count=0%>
             <%@requesters.each do |key,value|%>
-            <%=key%>
-            <%=value%>
+                <%count= count +1 %>
+                <%=count%>- <%=value%>
+                <a href="/courses/<%=@course.id%>/requesters/accept/<%=key%>">
+                <button class="btn btn-primary btn-lg" type="submit" >Accept</button>
+                </a>
+                <a href="/courses/<%=@course.id%>/requesters/<%=key%>/reject">
+                <button class="btn btn-primary btn-lg" type="submit" >Reject</button>
+                </a>
+                
             <%end%> 
-        <a href="/courses/new">
-        <button class="btn btn-primary btn-lg" type="submit" >Create Course</button>
-        </a>
+
         </div>
     </body>

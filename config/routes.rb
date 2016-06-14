@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   get 'courses/:id/join' =>'courses#join_course'
   get 'courses/:id/joinrequest' =>'courses#join_request' 
   get 'courses/:id/requesters' => 'courses#join_requests'
+
+  get 'courses/:id/requesters/accept/:requester_id' => 'courses#accept_request'
+  
   # get 'courses/:id/joinrequests' =>'courses#join_requests'
   
   resources :courses do
