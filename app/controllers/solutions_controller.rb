@@ -5,8 +5,8 @@ class SolutionsController < ApplicationController
 
   def delete_solution
     Solution.where(:student_id => current_user.id,:course_id => params[:course_id],:assignment_id => params[:assignment_id]).destroy_all
-    format.html { redirect_to course_assignments_path(@course), notice: 'Submition was deleted successfully.' }
-      
+    @course = Course.find(params[:course_id])
+    redirect_to :back
   end
 
   def index
