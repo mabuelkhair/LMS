@@ -1,5 +1,6 @@
 class Assignment < ActiveRecord::Base
 	belongs_to :course
+	has_many :solutions
 	mount_uploader :attachment, AttachmentUploader
 	validates :name,:description,:due_date ,presence: true
 

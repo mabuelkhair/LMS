@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
 
   
+  get 'solutions/index'
+
+  get 'solutions/new'
+
+  get 'solutions/create'
+
+  get 'solutions/destroy'
+
   get 'journal/browse'
   post 'journal/set_interests'
 
+  get 'courses/:course_id/assignments/:assignment_id/delete' => 'solutions#delete_solution'
+  
   resources :contents
   resources :chapters
   get '/courses/mycourses' => 'courses#mycourses'
@@ -22,7 +32,9 @@ Rails.application.routes.draw do
   
   resources :courses do
     resources :announcements
-    resources :assignments
+    resources :assignments do
+      resources :solutions
+  end
   end
   get 'home/index'
 
