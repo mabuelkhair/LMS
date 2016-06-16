@@ -1,5 +1,5 @@
 class SolutionsController < ApplicationController
-  before_action :set_solution, only: [:show, :edit, :update, :destroy]
+  before_action :set_solution
   before_filter :load_course ,:except => [:set_grade]
   # skip_before_filter :set_grade
 
@@ -12,8 +12,14 @@ class SolutionsController < ApplicationController
   end
   def set_grade
     @solution=Solution.find(params[:id])
-    @solution.update(solution_params)
-    redirect_to :back
+    @course=@solution.assignment.course
+    if @course.owner_id == current_user.id then
+      @solution.update(solution_params)
+      redirect_to :back
+    else
+      redirect_to(:controller => 'courses' :action => 'show')
+
+    end
   end
   def index
   	@solutions = @assignment.solutions.all
@@ -37,20 +43,6 @@ class SolutionsController < ApplicationController
         format.html { render :new }
         format.json { render json: @assignment.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  def destroy
-  	if current_user.id!=@course.owner_id
-      respond_to do |format|
-        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
-    end
-      return false
-    end
-    @assignment.destroy
-    respond_to do |format|
-      format.html { redirect_to course_assignments_path(@course), notice: 'Assignment was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
