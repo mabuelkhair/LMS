@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
 
   
+  get 'user/user'
+
+  get 'user/profile'
+
+  get 'user/follow'
+
+  get 'user/unfollow'
+
   put 'solutions/:id' => 'solutions#set_grade'
 
 
