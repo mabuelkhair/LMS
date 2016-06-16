@@ -3,6 +3,9 @@ class Course < ActiveRecord::Base
 	has_many :announcements
 	has_many :assignments
 	belongs_to :owner , class_name: 'User'
+
+  	has_and_belongs_to_many :students, :class_name =>"User"
+
 	validates :name,:description,:privacy ,:tags,:objectives ,presence: true, length: { minimum: 1 }
 	validates :name, uniqueness: true
 end

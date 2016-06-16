@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:reject_request,:accept_request,:show, :edit, :update, :destroy,:join_course,:join_request,:join_requests]
   before_action :authenticate_user!
 
   def related_courses
@@ -22,6 +22,61 @@ class CoursesController < ApplicationController
   end
   helper_method :related_courses
 
+  def join_course
+    
+    redirect_to(:action => 'show')
+
+    if @course.privacy=="public" then
+      if  !(@course.students.include? current_user or @course.owner.id==current_user.id) then
+        @course.students << current_user
+      end
+    end
+  end
+
+  def join_requests
+    if current_user.id==@course.owner.id then
+      @requests = JoinRequest.where(:course_id => @course.id )
+      @requesters = Hash.new
+      @requests.each  do |request|
+        user = User.find(request.requester_id)
+        @requesters[user.id]=user.email
+      end
+    end
+  end
+
+  def join_request
+    redirect_to(:action => 'show')
+    if @course.privacy=="private" then
+      if !(@course.students.include? current_user or @course.owner.id==current_user.id) then
+        if JoinRequest.where(:course_id => @course.id , :requester_id => current_user.id).count==0 then
+          JoinRequest.create(:course_id => @course.id , :requester_id => current_user.id)
+        end
+      end
+    end
+  end
+
+  def accept_request
+
+    redirect_to(:action => 'join_requests')
+    if current_user.id == @course.owner_id
+     req_id=params[:requester_id]
+     @course.students << User.find(req_id)
+     JoinRequest.where(:course_id =>@course.id,:requester_id => req_id).destroy_all
+   end
+  end
+
+  def reject_request
+
+    redirect_to(:action => 'join_requests')
+    if current_user.id == @course.owner_id
+     req_id=params[:requester_id]
+     JoinRequest.where(:course_id =>@course.id,:requester_id => req_id).destroy_all
+   end
+  end
+
+  def studying
+    @courses=current_user.courses
+  end
 
   def mycourses
     @courses =Course.where("owner_id = ?", current_user.id);

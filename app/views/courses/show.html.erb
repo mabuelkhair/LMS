@@ -24,6 +24,25 @@
                                         <%end%>
                 </div>
             </div>
+
+            <%if current_user.id==@course.owner.id&&@course.privacy=="private"%>
+            <a href="/courses/<%=@course.id%>/requesters"> <input class="btn btn-primary btn-ms" type="submit" value="Requesters">
+            <%end%>
+
+            <%if !in_course() and is_public() then%>
+            <a href="/courses/<%=@course.id%>/join"> <input class="btn btn-primary btn-ms" type="submit" value="Join Course">
+            </a>
+            <%end%>
+
+            <%if !in_course() and !is_public()  then%>
+                <%if !is_requested_before() %>
+                    <a href="/courses/<%=@course.id%>/joinrequest"> <input class="btn btn-primary btn-ms" type="submit" value="Join request">
+                    </a>
+                <%else%>
+                    <input class="btn btn-primary btn-ms" type="submit" value="request sent" disabled/>
+                <%end%>
+            <%end%>
+
            <a href="<%=course_announcements_path(@course)%>"> <input class="btn btn-primary btn-ms" type="submit" value="Announcements">
             </a>
             <a href="<%=course_assignments_path(@course)%>"> <input class="btn btn-primary btn-ms" type="submit" value="Assignments">
