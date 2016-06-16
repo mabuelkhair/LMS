@@ -23,6 +23,9 @@
                                 <td>
                                     <%= link_to 'Destroy', [@course, assignment], method: :delete, data: { confirm: 'Are you sure?' } %>
                                 </td>
+                                <td>
+                                    <a href='<%=assignment.id%>/solutions'> submissions</a>
+                                </td>
                                 <% end %>
                                     <p class="small text-muted">
                                         <i class="fa fa-clock-o fa-fw"></i>
@@ -47,6 +50,14 @@
                                             </a>
                                         <%else%>
                                         <p style="text-align: right">You have submit the assignment</p>
+                                        <% solution=Solution.where(:course_id => @course.id , :assignment_id => assignment.id ).first%>
+                                <%if solution.grade.nil? then %>
+                                <p style='font-size: 20px;text-align: right'>Grade: Not graded yet</p>
+                                <%else%>
+                                    <p style='font-size: 20px;text-align: right'>Grade:
+                                        <%=solution.grade%>
+                                    </p>
+                                    <%end%>
                                         <form action="assignments/<%=assignment.id%>/delete">
                                         <button type="submit" class="btn btn-danger" style="float: right;">Delete submition</button>
                                         </form>

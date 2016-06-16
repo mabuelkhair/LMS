@@ -1,6 +1,8 @@
 class SolutionsController < ApplicationController
   before_action :set_solution, only: [:show, :edit, :update, :destroy]
-  before_filter :load_course
+  before_filter :load_course ,:except => [:set_grade]
+  # skip_before_filter :set_grade
+
   before_action :authenticate_user!
 
   def delete_solution
@@ -8,7 +10,11 @@ class SolutionsController < ApplicationController
     @course = Course.find(params[:course_id])
     redirect_to :back
   end
-
+  def set_grade
+    @solution=Solution.find(params[:id])
+    @solution.update(solution_params)
+    redirect_to :back
+  end
   def index
   	@solutions = @assignment.solutions.all
   end
@@ -63,7 +69,7 @@ class SolutionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def solution_params
-      params.require(:solution).permit(:attachment, :student_id, :course_id,:assignment_id)
+      params.require(:solution).permit(:attachment, :student_id, :course_id,:assignment_id,:grade)
     end
 
 end
