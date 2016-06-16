@@ -39,6 +39,19 @@
                                         <%= link_to "Open content", assignment.attachment_url %>
                                     </p>
                                     <%end%>
+
+                                    <%if current_user.id != @course.owner.id  then %>
+                                        <%if !submitted_before(assignment.id) then %>
+                                            <a href='/courses/<%=@course.id%>/assignments/<%=assignment.id%>/solutions/new'>
+                                            <button type="submit" name="commit" class="btn btn-success">Submit</button>
+                                            </a>
+                                        <%else%>
+                                        <p style="text-align: right">You have submit the assignment</p>
+                                        <form action="assignments/<%=assignment.id%>/delete">
+                                        <button type="submit" class="btn btn-danger" style="float: right;">Delete submition</button>
+                                        </form>
+                                        <%end%>
+                                    <%end%>
                         </div>
                     </div>
                 </div>

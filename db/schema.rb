@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614085210) do
+ActiveRecord::Schema.define(version: 20160616040357) do
 
   create_table "announcements", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -86,6 +86,17 @@ ActiveRecord::Schema.define(version: 20160614085210) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "solutions", force: :cascade do |t|
+    t.string   "attachment",    limit: 255
+    t.integer  "course_id",     limit: 4
+    t.integer  "assignment_id", limit: 4
+    t.integer  "student_id",    limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "solutions", ["course_id", "assignment_id", "student_id"], name: "index_solutions_on_course_id_and_assignment_id_and_student_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
