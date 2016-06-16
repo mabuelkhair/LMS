@@ -42,10 +42,11 @@
                     <input class="btn btn-primary btn-ms" type="submit" value="request sent" disabled/>
                 <%end%>
             <%end%>
-
-           <a href="<%=course_announcements_path(@course)%>"> <input class="btn btn-primary btn-ms" type="submit" value="Announcements">
-            </a>
-            <a href="<%=course_assignments_path(@course)%>"> <input class="btn btn-primary btn-ms" type="submit" value="Assignments">
+            <%if in_course() then%>
+               <a href="<%=course_announcements_path(@course)%>"> <input class="btn btn-primary btn-ms" type="submit" value="Announcements">
+                </a>
+                <a href="<%=course_assignments_path(@course)%>"> <input class="btn btn-primary btn-ms" type="submit" value="Assignments">
+            <%end%>
             </a>
         </div>
     </div>
@@ -76,45 +77,48 @@
 
         </div>
     </div>
-    <% @course.chapters.each do |chapter| %>
-    <div class="panel panel-default curriculum">
-        <div class="panel-heading panel-heading-gray collapsed" data-toggle="collapse" data-target="#curriculum-<%=chapter.id%>" aria-expanded="false">
-            <div class="media"><span class="icon-block half pull-left"><i class="fa fa-graduation-cap"></i></span>
-                <div class="media-body">
-                    <h4 class="media-heading"><%=chapter.name %></h4>
-                     <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
-                            <%= link_to 'Upload Content', new_content_path(:id => chapter.id)%>
-                            <br>
-                            <%= link_to 'Edit', edit_chapter_path(chapter) %>
-                            <%= link_to 'Destroy', chapter, method: :delete, data: { confirm: 'Are you sure?' } %>
-                    <% end %>
-                    <p class="margin-none"><%=chapter.description%></p>
-                </div>
 
-            </div>
-            <span class="collapse-status collapse-open">Open</span>
-             <span class="collapse-status collapse-close">Close</span>
-        </div>
-        <div class="list-group collapse" id="curriculum-<%=chapter.id%>" aria-expanded="false" style="height: 0px;">
-            <% chapter.contents.each do |content| %>
-            <div class="list-group-item active" data-target="lesson.html">
-                <div class="table-responsive">
-                    <table class="table table-condensed table-borderless margin-none">
-                        <tbody>
-                            <tr>
-                                <td class="w50"> <%= content.name %></td>
-                                <td><%= link_to "Open content", content.attachment_url %></td>
-                                <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
-                                <td class="text-right"><%= button_to "Delete",  content, method: :delete, class: "btn btn-danger", confirm: "Are you sure that you wish to delete #{content.name}?" %></td>
-                                <%end%>
-                            </tr>
-                        </tbody>
-                    </table>
+    <%if in_course() then%>
+        <% @course.chapters.each do |chapter| %>
+        <div class="panel panel-default curriculum">
+            <div class="panel-heading panel-heading-gray collapsed" data-toggle="collapse" data-target="#curriculum-<%=chapter.id%>" aria-expanded="false">
+                <div class="media"><span class="icon-block half pull-left"><i class="fa fa-graduation-cap"></i></span>
+                    <div class="media-body">
+                        <h4 class="media-heading"><%=chapter.name %></h4>
+                         <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
+                                <%= link_to 'Upload Content', new_content_path(:id => chapter.id)%>
+                                <br>
+                                <%= link_to 'Edit', edit_chapter_path(chapter) %>
+                                <%= link_to 'Destroy', chapter, method: :delete, data: { confirm: 'Are you sure?' } %>
+                        <% end %>
+                        <p class="margin-none"><%=chapter.description%></p>
+                    </div>
+
                 </div>
+                <span class="collapse-status collapse-open">Open</span>
+                 <span class="collapse-status collapse-close">Close</span>
             </div>
-            <%end%>
+            <div class="list-group collapse" id="curriculum-<%=chapter.id%>" aria-expanded="false" style="height: 0px;">
+                <% chapter.contents.each do |content| %>
+                <div class="list-group-item active" data-target="lesson.html">
+                    <div class="table-responsive">
+                        <table class="table table-condensed table-borderless margin-none">
+                            <tbody>
+                                <tr>
+                                    <td class="w50"> <%= content.name %></td>
+                                    <td><%= link_to "Open content", content.attachment_url %></td>
+                                    <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
+                                    <td class="text-right"><%= button_to "Delete",  content, method: :delete, class: "btn btn-danger", confirm: "Are you sure that you wish to delete #{content.name}?" %></td>
+                                    <%end%>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <%end%>
+            </div>
         </div>
-    </div>
+        <%end%>
     <%end%>
     <% if related_courses().count>0%>
     <h2 style="text-align: center"> Related Course </h2>
