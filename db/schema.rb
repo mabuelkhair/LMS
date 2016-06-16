@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20160616040357) do
     t.integer  "course_id",     limit: 4
     t.integer  "assignment_id", limit: 4
     t.integer  "student_id",    limit: 4
+    t.float    "grade",         limit: 24
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end

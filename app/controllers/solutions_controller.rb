@@ -1,6 +1,7 @@
 class SolutionsController < ApplicationController
-  before_action :set_solution, only: [:show, :edit, :update, :destroy]
-  before_filter :load_course
+  before_filter :load_course ,:except => [:set_grade]
+  # skip_before_filter :set_grade
+
   before_action :authenticate_user!
 
   def delete_solution
@@ -8,7 +9,17 @@ class SolutionsController < ApplicationController
     @course = Course.find(params[:course_id])
     redirect_to :back
   end
+  def set_grade
+    @solution=Solution.find(params[:id])
+    @course=@solution.assignment.course
+    if @course.owner_id == current_user.id then
+      @solution.update(solution_params)
+      redirect_to :back
+    else
+      redirect_to(:controller => 'courses' ,:action => 'show')
 
+    end
+  end
   def index
   	@solutions = @assignment.solutions.all
   end
@@ -34,36 +45,16 @@ class SolutionsController < ApplicationController
     end
   end
 
-  def destroy
-  	if current_user.id!=@course.owner_id
-      respond_to do |format|
-        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
-    end
-      return false
-    end
-    @assignment.destroy
-    respond_to do |format|
-      format.html { redirect_to course_assignments_path(@course), notice: 'Assignment was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
     private
     def load_course
       @course = Course.find(params[:course_id])
       @assignment = @course.assignments.find(params[:assignment_id])
     end
-    # Use callbacks to share common setup or constraints between actions.
-    def set_solution
-      @course = Course.find(params[:course_id])
-      @assignment = @course.assignments.find(params[:assignment_id])
-      @solution = @assignment.solution.where(:student_id => current_user.id).first 
 
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def solution_params
-      params.require(:solution).permit(:attachment, :student_id, :course_id,:assignment_id)
+      params.require(:solution).permit(:attachment, :student_id, :course_id,:assignment_id,:grade)
     end
 
 end

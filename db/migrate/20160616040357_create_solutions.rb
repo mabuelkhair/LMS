@@ -5,7 +5,7 @@ class CreateSolutions < ActiveRecord::Migration
       t.integer :course_id
       t.integer :assignment_id
       t.integer :student_id
-
+      t.float :grade
       t.timestamps null: false
     end
 

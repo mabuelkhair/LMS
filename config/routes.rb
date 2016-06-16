@@ -1,13 +1,8 @@
 Rails.application.routes.draw do
 
   
-  get 'solutions/index'
+  put 'solutions/:id' => 'solutions#set_grade'
 
-  get 'solutions/new'
-
-  get 'solutions/create'
-
-  get 'solutions/destroy'
 
   get 'journal/browse'
   post 'journal/set_interests'
