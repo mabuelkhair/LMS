@@ -24,7 +24,7 @@
                                     <%= link_to 'Destroy', [@course, assignment], method: :delete, data: { confirm: 'Are you sure?' } %>
                                 </td>
                                 <td>
-                                    <a href='<%=assignment.id%>/solutions'> submissions</a>
+                                    <a href='/courses/<%=@course.id%>/assignments/<%=assignment.id%>/solutions'> submissions</a>
                                 </td>
                                 <% end %>
                                     <p class="small text-muted">

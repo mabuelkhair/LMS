@@ -1,5 +1,4 @@
 class SolutionsController < ApplicationController
-  before_action :set_solution
   before_filter :load_course ,:except => [:set_grade]
   # skip_before_filter :set_grade
 
@@ -17,7 +16,7 @@ class SolutionsController < ApplicationController
       @solution.update(solution_params)
       redirect_to :back
     else
-      redirect_to(:controller => 'courses' :action => 'show')
+      redirect_to(:controller => 'courses' ,:action => 'show')
 
     end
   end
@@ -51,13 +50,7 @@ class SolutionsController < ApplicationController
       @course = Course.find(params[:course_id])
       @assignment = @course.assignments.find(params[:assignment_id])
     end
-    # Use callbacks to share common setup or constraints between actions.
-    def set_solution
-      @course = Course.find(params[:course_id])
-      @assignment = @course.assignments.find(params[:assignment_id])
-      @solution = @assignment.solution.where(:student_id => current_user.id).first 
 
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def solution_params
