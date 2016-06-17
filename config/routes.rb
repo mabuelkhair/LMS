@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   
   get 'user/user'
 
-  get 'user/profile'
+  get 'user/profile' , :as => :user
 
   get 'user/:id/profile' => 'user#guest_profile'
 
