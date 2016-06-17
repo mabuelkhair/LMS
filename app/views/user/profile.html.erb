@@ -17,9 +17,9 @@
                     <div class="avatar">
                       <% if @user.avatar.url.present? == true then %>
                               <img src=<%=@user.avatar.url%> alt="" class="img-circle profile-img">
-                          <% else %>
+                      <% else %>
                                 <img src="/login.png" alt="" class="img-circle profile-img">
-                          <% end %>
+                      <% end %>
                       
                       <br>
                       <% if @guest == false then %>
@@ -49,8 +49,8 @@
                     </div>
                     <br>
                     <div class="profile-icons margin-none">
-                      <span><i class="fa fa-users"></i> 372</span>
-                      <span><i class="fa fa-book"></i><%= @user.courses.length %></span>
+                      <span><i class="fa fa-users"></i> <%= pluralize(@user.followers_count, 'follower')%></span><br>
+                      <span><i class="fa fa-book"></i> <%= pluralize(@user.courses.length, 'course') %></span>
                     </div>
                     <div class="panel-body">
                       <center><strong>Bio:</strong></center><br/>
@@ -147,51 +147,17 @@
                       </div>
                       <div class="panel-body">
                         <ul class="img-grid">
+                        <% @user.followers.each do |follower| %>
                           <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/guy-6.jpg" alt="image" />
-                            </a>
+                            <% if follower.avatar.url.present? == true then %>
+                                <a href="<%="/user/#{follower.id}/profile"%>">
+                                    <img src=<%=follower.avatar.url%> alt="" class="profile-img">
+                                </a>
+                            <% else %>
+                                      <img src="/login.png" alt="" class="profile-img-panel">
+                            <% end %>
                           </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/woman-3.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/guy-2.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/guy-9.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/woman-9.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li class="clearfix">
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/guy-4.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/guy-1.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/woman-4.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/guy-6.jpg" alt="image" />
-                            </a>
-                          </li>
+                        <% end %>
                         </ul>
                       </div>
                     </div>
