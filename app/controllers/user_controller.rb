@@ -21,7 +21,13 @@ class UserController < ApplicationController
 
   def guest_profile
   	@user = User.find(params[:id])
-  	@guest = true
+    if !current_user.nil? then
+      if params[:id] == current_user.id then
+        redirect_to(:controller => 'user', :action => 'profile')
+      end
+    else
+      @guest = true
+    end
   	puts @user
   	render :profile
   end
