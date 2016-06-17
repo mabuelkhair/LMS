@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-  
-  get 'user/user'
-
   get 'user/profile' , :as => :user
 
   put 'user/profile.:id' => 'user#update'
