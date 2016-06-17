@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   get 'user/:id/profile' => 'user#guest_profile'
 
-  get 'user/follow'
+  get 'user/:id/follow' => 'user#follow'
 
   get 'user/unfollow'
 

@@ -6,18 +6,24 @@ class UserController < ApplicationController
 
   def profile
     authenticate_user!
-   #  if current_user.nil? then 
-   #   redirect_to(:controller => 'registrations' ,:action => 'sign_up')
-   # end
   	@user = current_user
     @guest = false
   	puts @user
   end
 
   def follow
+    authenticate_user!
+    if params[:id] != current_user.id then
+      user = User.find(params[:id])
+      current_user.follow(user)
+    else
+      @follow_notice="some proper error msg"
+      redirect_to(:back)
+    end
   end
 
   def unfollow
+    authenticate_user!
   end
 
   def guest_profile
@@ -25,6 +31,8 @@ class UserController < ApplicationController
     if !current_user.nil? then
       if params[:id] == current_user.id then
         redirect_to(:controller => 'user', :action => 'profile')
+      else
+        @guest = true
       end
     else
       @guest = true

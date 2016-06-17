@@ -1,4 +1,4 @@
- <div class="st-container">
+<div class="st-container"> 
 
     <div class="st-pusher" id="content">
 
@@ -13,13 +13,14 @@
 
                 <div class="width-250 width-auto-xs">
                   <div class="panel panel-default widget-user-1 text-center">
+                  <br>
                     <div class="avatar">
                       <img src="/login.png" alt="" class="img-circle profile-img">
                       <h3><%=@user.email.split(/@/).first %></h3>
                       <br>
                       <% if @guest == true then %>
                       <!-- <a href="#" class="btn btn-success">Following <i class="fa fa-check-circle fa-fw"></i></a> -->
-                      <a href="#" class="btn btn-inverse">Follow<i class="fa fa-circle-o-notch fa-fw"></i></a>
+                      <a href=<%="/user/#{@user.id}/follow"%> class="btn btn-inverse">Follow<i class="fa fa-circle-o-notch fa-fw"></i></a>
                       <% end %>
                     </div>
                     <br>
@@ -69,7 +70,7 @@
                               <div class="col-sm-8">
                               	<% if @guest == false then %>
 			                           <%= best_in_place @user, :birthdate, :as => :date %>
-			                        <% else %>
+			                           <% else %>
 			                        	<%=@user.birthdate %>
 		                           <% end %>
 		                        </div>
@@ -94,7 +95,7 @@
                               	<% if @guest == false then %>
 			                        <%= best_in_place @user, :gender, :as => :select, :collection => {"Male" => "Male", "Female" => "Female"} %>
 			                    <% else %>
-			                        <%=@user.jobtitle %>
+			                        <%=@user.gender %>
 		                        <% end %>
                               </div>
                             </div>
