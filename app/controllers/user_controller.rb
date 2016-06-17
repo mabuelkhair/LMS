@@ -17,7 +17,7 @@ class UserController < ApplicationController
       @user = User.find(params[:id])
       @guest = true
       current_user.follow(@user)
-      render :profile
+      redirect_to(:controller => 'user', :action => 'guest_profile')
     else
       @follow_notice="some proper error msg"
       redirect_to(:back)
@@ -30,7 +30,7 @@ class UserController < ApplicationController
       @user = User.find(params[:id])
       @guest = true
       current_user.stop_following(@user)
-      render :profile
+      redirect_to(:controller => 'user', :action => 'guest_profile')
     else
       @follow_notice="some proper error msg"
       redirect_to(:back)
