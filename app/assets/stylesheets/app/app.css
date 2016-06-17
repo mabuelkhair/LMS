@@ -1,6 +1,9 @@
 .profile-img{
   max-width: 100px;
 }
+#ui-datepicker-div{
+  background-color: #ffffff
+}
 .skins {
   list-style: none;
   padding: 0;
