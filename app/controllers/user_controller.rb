@@ -39,17 +39,23 @@ class UserController < ApplicationController
 
   def guest_profile
   	@user = User.find(params[:id])
+    puts current_user.id
     if !current_user.nil? then
-      if params[:id] == current_user.id then
+      puts "been there"
+      if p@user.id == current_user.id then
+        puts "been here"
         redirect_to(:controller => 'user', :action => 'profile')
       else
         @guest = true
+        puts @user
+        render :profile
       end
     else
       @guest = true
+      puts @user
+      render :profile
     end
-  	puts @user
-  	render :profile
+  	
   end
 
   def update

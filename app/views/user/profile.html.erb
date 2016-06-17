@@ -15,8 +15,24 @@
                   <div class="panel panel-default widget-user-1 text-center">
                   <br>
                     <div class="avatar">
-                      <img src="/login.png" alt="" class="img-circle profile-img">
+                      <% if @user.avatar.url.present? == true then %>
+                              <img src=<%=@user.avatar.url%> alt="" class="img-circle profile-img">
+                          <% else %>
+                                <img src="/login.png" alt="" class="img-circle profile-img">
+                          <% end %>
+                      
+                      <br>
+                      <% if @guest == false then %>
+                      <center>
+                        <%= form_for @user, html: { multipart: true } do |f| %>
+                          <%= f.file_field :avatar %>
+                          <%= f.submit "Save", class: "btn btn-primary" %>
+                       <% end %>
+                     </center>
+                      <% end %>
+                     <br>
                       <h3><%=@user.email.split(/@/).first %></h3>
+
                       <br>
                       <% if @guest == true then %>
                         <% if !current_user.nil? then %>
