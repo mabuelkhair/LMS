@@ -1,259 +1,241 @@
-<div class="st-container"> 
+<br><br>
+<div class="container-fluid">
 
-    <div class="st-pusher" id="content">
+  <div class="media media-grid media-clearfix-xs">
+    <div class="media-left">
 
-      <div class="st-content">
+      <div class="width-250 width-auto-xs">
+        <div class="panel panel-default widget-user-1 text-center">
+        <br>
+          <div class="avatar">
+            <% if @user.avatar.url.present? == true then %>
+                    <img src=<%=@user.avatar.url%> alt="" class="profile-img">
+            <% else %>
+                      <img src="/login.png" alt="" class="profile-img">
+            <% end %>
+            
+            <br>
+            <% if @guest == false then %>
+            <center>
+              <%= form_for @user, html: { multipart: true } do |f| %>
+                <%= f.file_field :avatar %>
+                <%= f.submit "Save", class: "btn btn-primary" %>
+             <% end %>
+           </center>
+            <% end %>
+           <br>
+            <h3><%=@user.email.split(/@/).first %></h3>
 
-        <div class="st-content-inner">
+            <br>
+            <% if @guest == true then %>
+              <% if !current_user.nil? then %>
 
-          <div class="container-fluid">
+                  <% if current_user.following?(@user) == false then %>
+                    <a href=<%="/user/#{@user.id}/follow"%> class="btn btn-inverse">Follow<i class="fa fa-circle-o-notch fa-fw"></i></a>
+                  <% else %>
+                    <a href=<%="/user/#{@user.id}/unfollow"%> class="btn btn-success">Following <i class="fa fa-check-circle fa-fw"></i></a>
+                  <% end %>
+              <% else %>
+                <a href=<%="/user/#{@user.id}/follow"%> class="btn btn-inverse">Follow<i class="fa fa-circle-o-notch fa-fw"></i></a>
+              <% end %>
+            <% end %>
+          </div>
+          <br>
+          <div class="profile-icons margin-none">
+            <span><i class="fa fa-users"></i> <%= pluralize(@user.followers_count, 'follower')%></span><br>
+            <span><i class="fa fa-book"></i> <%= pluralize(@user.courses.length, 'course') %></span>
+          </div>
+          <div class="panel-body">
+            <center><strong>Bio:</strong></center><br/>
+                <% if @guest == false then %>
+                    <%= best_in_place @user, :bio, :as => :textarea %>
+                <% else %>
+                      <p><%=@user.bio %></p>
+                <% end %>
+          </div>
+        </div>
 
-            <div class="media media-grid media-clearfix-xs">
-              <div class="media-left">
+        <!-- Contact -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Contact
+          </div>
+          <ul class="icon-list icon-list-block">
+            <li><i class="fa fa-envelope fa-fw"></i> <a href="#"><%=@user.email %></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-                <div class="width-250 width-auto-xs">
-                  <div class="panel panel-default widget-user-1 text-center">
-                  <br>
-                    <div class="avatar">
-                      <% if @user.avatar.url.present? == true then %>
-                              <img src=<%=@user.avatar.url%> alt="" class="profile-img">
-                      <% else %>
-                                <img src="/login.png" alt="" class="profile-img">
-                      <% end %>
-                      
-                      <br>
+    <div class="media-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading panel-heading-gray">
+              <a href="#" class="btn btn-white btn-xs pull-right">
+              <% if @guest == false then %>
+              <i class="fa fa-pencil"></i>
+              <% end %>
+              </a>
+              <i class="fa fa-fw fa-info-circle"></i> About
+            </div>
+            <div class="panel-body">
+              <ul class="list-unstyled profile-about margin-none">
+                <li class="padding-v-5">
+                  <div class="row">
+                    <div class="col-sm-4"><span class="text-muted">Date of Birth</span></div>
+                    <div class="col-sm-8">
+                    	<% if @guest == false then %>
+                       <%= best_in_place @user, :birthdate, :as => :date %>
+                       <% else %>
+                    	<%=@user.birthdate %>
+                     <% end %>
+                  </div>
+                  </div>
+                </li>
+                <li class="padding-v-5">
+                  <div class="row">
+                    <div class="col-sm-4"><span class="text-muted">Job</span></div>
+                    <div class="col-sm-8">
                       <% if @guest == false then %>
-                      <center>
-                        <%= form_for @user, html: { multipart: true } do |f| %>
-                          <%= f.file_field :avatar %>
-                          <%= f.submit "Save", class: "btn btn-primary" %>
-                       <% end %>
-                     </center>
-                      <% end %>
-                     <br>
-                      <h3><%=@user.email.split(/@/).first %></h3>
-
-                      <br>
-                      <% if @guest == true then %>
-                        <% if !current_user.nil? then %>
-
-                            <% if current_user.following?(@user) == false then %>
-                              <a href=<%="/user/#{@user.id}/follow"%> class="btn btn-inverse">Follow<i class="fa fa-circle-o-notch fa-fw"></i></a>
-                            <% else %>
-                              <a href=<%="/user/#{@user.id}/unfollow"%> class="btn btn-success">Following <i class="fa fa-check-circle fa-fw"></i></a>
-                            <% end %>
-                        <% else %>
-                          <a href=<%="/user/#{@user.id}/follow"%> class="btn btn-inverse">Follow<i class="fa fa-circle-o-notch fa-fw"></i></a>
-                        <% end %>
-                      <% end %>
-                    </div>
-                    <br>
-                    <div class="profile-icons margin-none">
-                      <span><i class="fa fa-users"></i> <%= pluralize(@user.followers_count, 'follower')%></span><br>
-                      <span><i class="fa fa-book"></i> <%= pluralize(@user.courses.length, 'course') %></span>
-                    </div>
-                    <div class="panel-body">
-                      <center><strong>Bio:</strong></center><br/>
-                          <% if @guest == false then %>
-                              <%= best_in_place @user, :bio, :as => :textarea %>
-                          <% else %>
-                                <p><%=@user.bio %></p>
-                          <% end %>
+                    <%= best_in_place @user, :jobtitle %>
+                <% else %>
+                    	<%=@user.jobtitle %>
+                  <% end %>
                     </div>
                   </div>
-
-                  <!-- Contact -->
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      Contact
-                    </div>
-                    <ul class="icon-list icon-list-block">
-                      <li><i class="fa fa-envelope fa-fw"></i> <a href="#"><%=@user.email %></a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div class="media-body">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="panel panel-default">
-                      <div class="panel-heading panel-heading-gray">
-                        <a href="#" class="btn btn-white btn-xs pull-right">
-                        <% if @guest == false then %>
-                        <i class="fa fa-pencil"></i>
-                        <% end %>
-                        </a>
-                        <i class="fa fa-fw fa-info-circle"></i> About
-                      </div>
-                      <div class="panel-body">
-                        <ul class="list-unstyled profile-about margin-none">
-                          <li class="padding-v-5">
-                            <div class="row">
-                              <div class="col-sm-4"><span class="text-muted">Date of Birth</span></div>
-                              <div class="col-sm-8">
-                              	<% if @guest == false then %>
-			                           <%= best_in_place @user, :birthdate, :as => :date %>
-			                           <% else %>
-			                        	<%=@user.birthdate %>
-		                           <% end %>
-		                        </div>
-                            </div>
-                          </li>
-                          <li class="padding-v-5">
-                            <div class="row">
-                              <div class="col-sm-4"><span class="text-muted">Job</span></div>
-                              <div class="col-sm-8">
-                                <% if @guest == false then %>
-			                        <%= best_in_place @user, :jobtitle %>
-			                    <% else %>
-			                        	<%=@user.jobtitle %>
-		                        <% end %>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="padding-v-5">
-                            <div class="row">
-                              <div class="col-sm-4"><span class="text-muted">Gender</span></div>
-                              <div class="col-sm-8">
-                              	<% if @guest == false then %>
-			                        <%= best_in_place @user, :gender, :as => :select, :collection => {"Male" => "Male", "Female" => "Female"} %>
-			                    <% else %>
-			                        <%=@user.gender %>
-		                        <% end %>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="padding-v-5">
-                            <div class="row">
-                              <div class="col-sm-4"><span class="text-muted">Lives in</span></div>
-                              <div class="col-sm-8">
-                                <% if @guest == false then %>
-			                        <%= best_in_place @user, :address %>
-			                    <% else %>
-			                        <%=@user.address %>
-		                        <% end %>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
+                </li>
+                <li class="padding-v-5">
+                  <div class="row">
+                    <div class="col-sm-4"><span class="text-muted">Gender</span></div>
+                    <div class="col-sm-8">
+                    	<% if @guest == false then %>
+                    <%= best_in_place @user, :gender, :as => :select, :collection => {"Male" => "Male", "Female" => "Female"} %>
+                <% else %>
+                    <%=@user.gender %>
+                  <% end %>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="panel panel-default">
-                      <div class="panel-heading panel-heading-gray">
-                        <i class="icon-@user-1"></i> Following
-                      </div>
-                      <div class="panel-body">
-                        <ul class="img-grid">
-                        <% @user.followers.each do |follower| %>
-                          <li>
-                            <% if follower.avatar.url.present? == true then %>
-                                <a href="<%="/user/#{follower.id}/profile"%>">
-                                    <img src=<%=follower.avatar.url%> alt="" class="profile-img">
-                                </a>
-                            <% else %>
-                                      <img src="/login.png" alt="" class="profile-img-panel">
-                            <% end %>
-                          </li>
-                        <% end %>
-                        </ul>
-                      </div>
+                </li>
+                <li class="padding-v-5">
+                  <div class="row">
+                    <div class="col-sm-4"><span class="text-muted">Lives in</span></div>
+                    <div class="col-sm-8">
+                      <% if @guest == false then %>
+                    <%= best_in_place @user, :address %>
+                <% else %>
+                    <%=@user.address %>
+                  <% end %>
                     </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading panel-heading-gray">
+              <i class="icon-@user-1"></i> Following
+            </div>
+            <div class="panel-body">
+              <ul class="img-grid">
+              <% @user.followers.each do |follower| %>
+                <li>
+                  <% if follower.avatar.url.present? == true then %>
+                      <a href="<%="/user/#{follower.id}/profile"%>">
+                          <img src=<%=follower.avatar.url%> alt="" class="profile-img">
+                      </a>
+                  <% else %>
+                            <img src="/login.png" alt="" class="profile-img-panel">
+                  <% end %>
+                </li>
+              <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-gray">
+          <i class="fa fa-book"></i> Courses
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <a href="#" class="h5 margin-none">Climb a Mountain</a>
+                  <div class="text-muted">
+                    <small><i class="fa fa-calendar"></i> 24/10/2014</small>
                   </div>
                 </div>
-
-                <div class="panel panel-default">
-                  <div class="panel-heading panel-heading-gray">
-                    <i class="fa fa-book"></i> Courses
-                  </div>
-                  <div class="panel-body">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="panel panel-default">
-                          <div class="panel-body">
-                            <a href="#" class="h5 margin-none">Climb a Mountain</a>
-                            <div class="text-muted">
-                              <small><i class="fa fa-calendar"></i> 24/10/2014</small>
-                            </div>
-                          </div>
-                          <a href="#">
-                            <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/place1-full.jpg" alt="image" class="img-responsive" />
-                          </a>
-                          <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor impedit ipsum laborum maiores tempore veritatis....</p>
-                            <div>
-                              <div class="pull-right">
-                                <a href="#" class="btn btn-primary btn-xs">read</a>
-                              </div>
-
-                              <a href="#" class="text-muted"> <i class="fa fa-comments"></i> 6</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="panel panel-default">
-                          <div class="panel-body text-center">
-                            <a href="#" class="h5 margin-none">Vegetarian Pizza</a>
-                            <p class="text-muted"><i class="fa fa-calendar"></i> 24/10/2014</p>
-                            <span class="fa fa-star text-primary"></span>
-                            <span class="fa fa-star text-primary"></span>
-                            <span class="fa fa-star text-primary"></span>
-                            <span class="fa fa-star text-primary"></span>
-                            <span class="fa fa-star-o"></span>
-                          </div>
-                          <a href="#">
-                            <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/food1-full.jpg" alt="image" class="img-responsive" />
-                          </a>
-                          <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor impedit ipsum laborum maiores tempore veritatis....</p>
-                            <div>
-                              <div class="pull-right">
-                                <a href="#" class="btn btn-primary btn-xs">read</a>
-                              </div>
-                              <a href="#" class="text-muted"> <i class="fa fa-comments"></i> 6</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="panel panel-default">
-                          <div class="panel-body">
-                            <div class="pull-right">
-                              <a href="#" class="btn btn-success btn-xs"><i class="fa fa-check-circle"></i></a>
-                            </div>
-                            <a href="#" class="h5">Win a Holiday</a>
-                            <div class="text-muted">
-                              <small><i class="fa fa-calendar"></i> 24/10/2014</small>
-                            </div>
-                          </div>
-                          <a href="#">
-                            <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/place2-full.jpg" alt="image" class="img-responsive" />
-                          </a>
-                          <ul class="icon-list icon-list-block">
-                            <li><i class="fa fa-calendar fa-fw"></i> <a href="#">1 Week</a></li>
-                            <li><i class="fa fa-@users fa-fw"></i> <a href="#"> 2 People</a></li>
-                            <li><i class="fa fa-map-marker fa-fw"></i> <a href="#">Miami, FL, USA</a></li>
-                          </ul>
-                        </div>
-                      </div>
+                <a href="#">
+                  <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/place1-full.jpg" alt="image" class="img-responsive" />
+                </a>
+                <div class="panel-body">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor impedit ipsum laborum maiores tempore veritatis....</p>
+                  <div>
+                    <div class="pull-right">
+                      <a href="#" class="btn btn-primary btn-xs">read</a>
                     </div>
+
+                    <a href="#" class="text-muted"> <i class="fa fa-comments"></i> 6</a>
                   </div>
                 </div>
               </div>
             </div>
-
+            <div class="col-md-4">
+              <div class="panel panel-default">
+                <div class="panel-body text-center">
+                  <a href="#" class="h5 margin-none">Vegetarian Pizza</a>
+                  <p class="text-muted"><i class="fa fa-calendar"></i> 24/10/2014</p>
+                  <span class="fa fa-star text-primary"></span>
+                  <span class="fa fa-star text-primary"></span>
+                  <span class="fa fa-star text-primary"></span>
+                  <span class="fa fa-star text-primary"></span>
+                  <span class="fa fa-star-o"></span>
+                </div>
+                <a href="#">
+                  <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/food1-full.jpg" alt="image" class="img-responsive" />
+                </a>
+                <div class="panel-body">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor impedit ipsum laborum maiores tempore veritatis....</p>
+                  <div>
+                    <div class="pull-right">
+                      <a href="#" class="btn btn-primary btn-xs">read</a>
+                    </div>
+                    <a href="#" class="text-muted"> <i class="fa fa-comments"></i> 6</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="pull-right">
+                    <a href="#" class="btn btn-success btn-xs"><i class="fa fa-check-circle"></i></a>
+                  </div>
+                  <a href="#" class="h5">Win a Holiday</a>
+                  <div class="text-muted">
+                    <small><i class="fa fa-calendar"></i> 24/10/2014</small>
+                  </div>
+                </div>
+                <a href="#">
+                  <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/place2-full.jpg" alt="image" class="img-responsive" />
+                </a>
+                <ul class="icon-list icon-list-block">
+                  <li><i class="fa fa-calendar fa-fw"></i> <a href="#">1 Week</a></li>
+                  <li><i class="fa fa-@users fa-fw"></i> <a href="#"> 2 People</a></li>
+                  <li><i class="fa fa-map-marker fa-fw"></i> <a href="#">Miami, FL, USA</a></li>
+                </ul>
+              </div>
+            </div>
           </div>
-
         </div>
-        <!-- /st-content-inner -->
-
       </div>
-      <!-- /st-content -->
-
     </div>
-    <!-- /st-pusher -->
+  </div>
 
-</div>  <!-- /st-container -->
+</div>
