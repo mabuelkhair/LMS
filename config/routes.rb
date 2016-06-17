@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   get 'user/:id/follow' => 'user#follow'
 
-  get 'user/unfollow'
+  get 'user/:id/unfollow' => 'user#unfollow'
 
   put 'solutions/:id' => 'solutions#set_grade'
 

@@ -19,8 +19,16 @@
                       <h3><%=@user.email.split(/@/).first %></h3>
                       <br>
                       <% if @guest == true then %>
-                      <!-- <a href="#" class="btn btn-success">Following <i class="fa fa-check-circle fa-fw"></i></a> -->
-                      <a href=<%="/user/#{@user.id}/follow"%> class="btn btn-inverse">Follow<i class="fa fa-circle-o-notch fa-fw"></i></a>
+                        <% if !current_user.nil? then %>
+
+                            <% if current_user.following?(@user) == false then %>
+                              <a href=<%="/user/#{@user.id}/follow"%> class="btn btn-inverse">Follow<i class="fa fa-circle-o-notch fa-fw"></i></a>
+                            <% else %>
+                              <a href=<%="/user/#{@user.id}/unfollow"%> class="btn btn-success">Following <i class="fa fa-check-circle fa-fw"></i></a>
+                            <% end %>
+                        <% else %>
+                          <a href=<%="/user/#{@user.id}/follow"%> class="btn btn-inverse">Follow<i class="fa fa-circle-o-notch fa-fw"></i></a>
+                        <% end %>
                       <% end %>
                     </div>
                     <br>

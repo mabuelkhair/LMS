@@ -14,8 +14,10 @@ class UserController < ApplicationController
   def follow
     authenticate_user!
     if params[:id] != current_user.id then
-      user = User.find(params[:id])
-      current_user.follow(user)
+      @user = User.find(params[:id])
+      @guest = true
+      current_user.follow(@user)
+      render :profile
     else
       @follow_notice="some proper error msg"
       redirect_to(:back)
@@ -24,6 +26,15 @@ class UserController < ApplicationController
 
   def unfollow
     authenticate_user!
+    if params[:id] != current_user.id then
+      @user = User.find(params[:id])
+      @guest = true
+      current_user.stop_following(@user)
+      render :profile
+    else
+      @follow_notice="some proper error msg"
+      redirect_to(:back)
+    end
   end
 
   def guest_profile
