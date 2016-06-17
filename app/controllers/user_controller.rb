@@ -1,4 +1,5 @@
 class UserController < ApplicationController
+  respond_to :html, :json
   def user
   	
   end
@@ -45,5 +46,10 @@ class UserController < ApplicationController
       end
     end
   end
-  
+
+  private
+  def user_params
+    params.require(:user).permit!
+  end
+
 end

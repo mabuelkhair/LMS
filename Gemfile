@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 
-gem 'best_in_place', '~> 3.0.1'
+gem 'best_in_place'
 gem 'jquery-ui-rails'
 gem 'carrierwave', '~>0.9'
 gem 'bootstrap-sass', '~> 2.3.2' 

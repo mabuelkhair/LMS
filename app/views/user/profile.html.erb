@@ -28,17 +28,12 @@
                       <span><i class="fa fa-book"></i><%= @user.courses.length %></span>
                     </div>
                     <div class="panel-body">
-                      <div class="expandable expandable-indicator-white expandable-trigger">
-                        <div class="expandable-content">
-                        	<center><strong>Bio:</strong></center><br/>
-                        	<% if @guest == false then %>
-			                        <%= best_in_place @user, :bio, :as => :textarea %>
-			                    <% else %>
-			                        	<p><%=@user.bio %></p>
-		                        <% end %>
-                          
-                        </div>
-                      </div>
+                      <center><strong>Bio:</strong></center><br/>
+                          <% if @guest == false then %>
+                              <%= best_in_place @user, :bio, :as => :textarea %>
+                          <% else %>
+                                <p><%=@user.bio %></p>
+                          <% end %>
                     </div>
                   </div>
 
@@ -73,10 +68,10 @@
                               <div class="col-sm-4"><span class="text-muted">Date of Birth</span></div>
                               <div class="col-sm-8">
                               	<% if @guest == false then %>
-			                        <%= best_in_place @user, :birthdate, :as => :date %>
-			                    <% else %>
+			                           <%= best_in_place @user, :birthdate, :as => :date %>
+			                        <% else %>
 			                        	<%=@user.birthdate %>
-		                        <% end %>
+		                           <% end %>
 		                        </div>
                             </div>
                           </li>
