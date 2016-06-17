@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   get 'user/profile'
 
+  get 'user/:id/profile' => 'user#guest_profile'
+
   get 'user/follow'
 
   get 'user/unfollow'
