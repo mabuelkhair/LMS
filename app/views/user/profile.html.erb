@@ -1,14 +1,9 @@
  <div class="st-container">
-  <!-- content push wrapper -->
+
     <div class="st-pusher" id="content">
 
-      <!-- sidebar effects INSIDE of st-pusher: -->
-      <!-- st-effect-3, st-effect-6, st-effect-7, st-effect-8, st-effect-14 -->
-
-      <!-- this is the wrapper for the content -->
       <div class="st-content">
 
-        <!-- extra div for emulating position:fixed of the menu -->
         <div class="st-content-inner">
 
           <div class="container-fluid">
@@ -20,20 +15,18 @@
                   <div class="panel panel-default widget-user-1 text-center">
                     <div class="avatar">
                       <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/guy-5.jpg" alt="" class="img-circle">
-                      <h3>Adrian Demian</h3>
+                      <h3><%=current_user.email.split(/@/).first %></h3>
                       <a href="#" class="btn btn-success">Following <i class="fa fa-check-circle fa-fw"></i></a>
                     </div>
                     <div class="profile-icons margin-none">
                       <span><i class="fa fa-users"></i> 372</span>
-                      <span><i class="fa fa-photo"></i> 43</span>
-                      <span><i class="fa fa-video-camera"></i> 3</span>
+                      <span><i class="fa fa-book"></i><%= current_user.courses.length %></span>
                     </div>
                     <div class="panel-body">
                       <div class="expandable expandable-indicator-white expandable-trigger">
                         <div class="expandable-content">
-                          <p>Hi! I'm Adrian the Senior UI Designer at
-                            <strong>MOSAICPRO</strong>. We hope you enjoy the design and quality of Social.</p>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut autem delectus dolorum necessitatibus neque odio quam quas qui quod soluta? Aliquid eius esse minima.</p>
+                        	<center><strong>Bio:</strong></center><br/>
+                          <p><%=current_user.bio %></p>
                         </div>
                       </div>
                     </div>
@@ -45,13 +38,12 @@
                       Contact
                     </div>
                     <ul class="icon-list icon-list-block">
-                      <li><i class="fa fa-envelope fa-fw"></i> <a href="#">contact@mosaicpro.biz</a></li>
-                      <li><i class="fa fa-facebook fa-fw"></i> <a href="#">/facebook</a></li>
-                      <li><i class="fa fa-behance fa-fw"></i> <a href="#">/user</a></li>
+                      <li><i class="fa fa-envelope fa-fw"></i> <a href="#"><%=current_user.email %></a></li>
                     </ul>
                   </div>
                 </div>
               </div>
+              
               <div class="media-body">
                 <div class="row">
                   <div class="col-md-6">
@@ -65,31 +57,25 @@
                           <li class="padding-v-5">
                             <div class="row">
                               <div class="col-sm-4"><span class="text-muted">Date of Birth</span></div>
-                              <div class="col-sm-8">12 January 1990</div>
+                              <div class="col-sm-8"><%=current_user.birthdate %></div>
                             </div>
                           </li>
                           <li class="padding-v-5">
                             <div class="row">
                               <div class="col-sm-4"><span class="text-muted">Job</span></div>
-                              <div class="col-sm-8">Specialist</div>
+                              <div class="col-sm-8"><%=current_user.jobtitle %></div>
                             </div>
                           </li>
                           <li class="padding-v-5">
                             <div class="row">
                               <div class="col-sm-4"><span class="text-muted">Gender</span></div>
-                              <div class="col-sm-8">Male</div>
+                              <div class="col-sm-8"><%=current_user.gender %></div>
                             </div>
                           </li>
                           <li class="padding-v-5">
                             <div class="row">
                               <div class="col-sm-4"><span class="text-muted">Lives in</span></div>
-                              <div class="col-sm-8">Miami, FL, USA</div>
-                            </div>
-                          </li>
-                          <li class="padding-v-5">
-                            <div class="row">
-                              <div class="col-sm-4"><span class="text-muted">Credits</span></div>
-                              <div class="col-sm-8">249</div>
+                              <div class="col-sm-8"><%=current_user.address %></div>
                             </div>
                           </li>
                         </ul>
@@ -99,10 +85,7 @@
                   <div class="col-md-6">
                     <div class="panel panel-default">
                       <div class="panel-heading panel-heading-gray">
-                        <div class="pull-right">
-                          <a href="#" class="btn btn-primary btn-xs">Add <i class="fa fa-plus"></i></a>
-                        </div>
-                        <i class="icon-user-1"></i> Friends
+                        <i class="icon-user-1"></i> Following
                       </div>
                       <div class="panel-body">
                         <ul class="img-grid">
@@ -159,7 +142,7 @@
 
                 <div class="panel panel-default">
                   <div class="panel-heading panel-heading-gray">
-                    <i class="fa fa-bookmark"></i> Bookmarks
+                    <i class="fa fa-book"></i> Courses
                   </div>
                   <div class="panel-body">
                     <div class="row">
@@ -248,5 +231,5 @@
 
     </div>
     <!-- /st-pusher -->
-    
+
 </div>  <!-- /st-container -->
