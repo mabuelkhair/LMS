@@ -1,4 +1,4 @@
- <div class="st-container">
+<div class="st-container"> 
 
     <div class="st-pusher" id="content">
 
@@ -13,19 +13,44 @@
 
                 <div class="width-250 width-auto-xs">
                   <div class="panel panel-default widget-user-1 text-center">
+                  <br>
                     <div class="avatar">
-                      <img src="/login.png" alt="" class="img-circle profile-img">
+                      <% if @user.avatar.url.present? == true then %>
+                              <img src=<%=@user.avatar.url%> alt="" class="img-circle profile-img">
+                      <% else %>
+                                <img src="/login.png" alt="" class="img-circle profile-img">
+                      <% end %>
+                      
+                      <br>
+                      <% if @guest == false then %>
+                      <center>
+                        <%= form_for @user, html: { multipart: true } do |f| %>
+                          <%= f.file_field :avatar %>
+                          <%= f.submit "Save", class: "btn btn-primary" %>
+                       <% end %>
+                     </center>
+                      <% end %>
+                     <br>
                       <h3><%=@user.email.split(/@/).first %></h3>
+
                       <br>
                       <% if @guest == true then %>
-                      <!-- <a href="#" class="btn btn-success">Following <i class="fa fa-check-circle fa-fw"></i></a> -->
-                      <a href="#" class="btn btn-inverse">Follow<i class="fa fa-circle-o-notch fa-fw"></i></a>
+                        <% if !current_user.nil? then %>
+
+                            <% if current_user.following?(@user) == false then %>
+                              <a href=<%="/user/#{@user.id}/follow"%> class="btn btn-inverse">Follow<i class="fa fa-circle-o-notch fa-fw"></i></a>
+                            <% else %>
+                              <a href=<%="/user/#{@user.id}/unfollow"%> class="btn btn-success">Following <i class="fa fa-check-circle fa-fw"></i></a>
+                            <% end %>
+                        <% else %>
+                          <a href=<%="/user/#{@user.id}/follow"%> class="btn btn-inverse">Follow<i class="fa fa-circle-o-notch fa-fw"></i></a>
+                        <% end %>
                       <% end %>
                     </div>
                     <br>
                     <div class="profile-icons margin-none">
-                      <span><i class="fa fa-users"></i> 372</span>
-                      <span><i class="fa fa-book"></i><%= @user.courses.length %></span>
+                      <span><i class="fa fa-users"></i> <%= pluralize(@user.followers_count, 'follower')%></span><br>
+                      <span><i class="fa fa-book"></i> <%= pluralize(@user.courses.length, 'course') %></span>
                     </div>
                     <div class="panel-body">
                       <center><strong>Bio:</strong></center><br/>
@@ -69,7 +94,7 @@
                               <div class="col-sm-8">
                               	<% if @guest == false then %>
 			                           <%= best_in_place @user, :birthdate, :as => :date %>
-			                        <% else %>
+			                           <% else %>
 			                        	<%=@user.birthdate %>
 		                           <% end %>
 		                        </div>
@@ -94,7 +119,7 @@
                               	<% if @guest == false then %>
 			                        <%= best_in_place @user, :gender, :as => :select, :collection => {"Male" => "Male", "Female" => "Female"} %>
 			                    <% else %>
-			                        <%=@user.jobtitle %>
+			                        <%=@user.gender %>
 		                        <% end %>
                               </div>
                             </div>
@@ -122,51 +147,17 @@
                       </div>
                       <div class="panel-body">
                         <ul class="img-grid">
+                        <% @user.followers.each do |follower| %>
                           <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/guy-6.jpg" alt="image" />
-                            </a>
+                            <% if follower.avatar.url.present? == true then %>
+                                <a href="<%="/user/#{follower.id}/profile"%>">
+                                    <img src=<%=follower.avatar.url%> alt="" class="profile-img">
+                                </a>
+                            <% else %>
+                                      <img src="/login.png" alt="" class="profile-img-panel">
+                            <% end %>
                           </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/woman-3.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/guy-2.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/guy-9.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/woman-9.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li class="clearfix">
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/guy-4.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/guy-1.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/woman-4.jpg" alt="image" />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/110/guy-6.jpg" alt="image" />
-                            </a>
-                          </li>
+                        <% end %>
                         </ul>
                       </div>
                     </div>

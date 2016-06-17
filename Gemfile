@@ -1,8 +1,11 @@
 source 'https://rubygems.org'
 
-
+#social
 gem 'best_in_place'
+gem "acts_as_follower"
 gem 'jquery-ui-rails'
+
+
 gem 'carrierwave', '~>0.9'
 gem 'bootstrap-sass', '~> 2.3.2' 
 gem "font-awesome-rails"

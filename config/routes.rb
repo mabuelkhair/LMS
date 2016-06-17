@@ -6,12 +6,13 @@ Rails.application.routes.draw do
   get 'user/profile' , :as => :user
 
   put 'user/profile.:id' => 'user#update'
+  patch 'user/profile.:id' => 'user#update'
 
   get 'user/:id/profile' => 'user#guest_profile'
 
-  get 'user/follow'
+  get 'user/:id/follow' => 'user#follow'
 
-  get 'user/unfollow'
+  get 'user/:id/unfollow' => 'user#unfollow'
 
   put 'solutions/:id' => 'solutions#set_grade'
 
