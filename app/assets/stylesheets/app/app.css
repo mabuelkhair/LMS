@@ -1,3 +1,6 @@
+.profile-img{
+  max-width: 100px;
+}
 .skins {
   list-style: none;
   padding: 0;
@@ -6136,6 +6139,7 @@ body.login .lock-container .panel .forgot-password {
 .padding-v-5 {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
+  padding-left: 30px !important;
 }
 .padding-v-5-10 {
   padding-top: 5px !important;
