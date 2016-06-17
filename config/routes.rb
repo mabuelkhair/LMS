@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   
   get 'user/user'
 
-  get 'user/profile'
+  get 'user/profile' , :as => :user
+
+  put 'user/profile.:id' => 'user#update'
 
   get 'user/:id/profile' => 'user#guest_profile'
 
