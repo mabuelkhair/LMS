@@ -1,6 +1,96 @@
-<h1>Editing Quiz</h1>
+   
+   <div class="container-fluid">
+      <div class="lock-container">
+         <h1 style="color: black">Edit Quiz</h1>
+         <div class="panel panel-default text-center">
+            <br>
+            <div class="panel-body">
+               <%= form_for([@course,@quiz]) do |f| %>
+                 <% if @quiz.errors.any? %>
+                   <div id="error_explanation">
+                      <h2><%= pluralize(@quiz.errors.count, "error") %> prohibited this quiz from being saved:</h2>
 
-<%= render 'form' %>
+                      <ul>
+                      <% @quiz.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                      <% end %>
+                      </ul>
+                  </div>
+                <%end%>
+               <div class="field">
+                  <%= f.label :name %><br />
+                  <%= f.text_field :name, autofocus: true, :class => 'form-control' %>
+               </div>
+               <br>
+               <div class="actions">
+                  <%= f.submit "Update", :class => 'btn btn-primary' %>
+               </div>
+               <% end %>
+            </div>
+         </div>
+      </div>
+   </div>
 
-<%= link_to 'Show', @quiz %> |
-<%= link_to 'Back', quizzes_path %>
+
+   <div class="container-fluid">
+      <div class="lock-container">
+         <h1 style="color: black">Add Question</h1>
+         <div class="panel panel-default text-center">
+            <br>
+            <div class="panel-body">
+            <%@question=Question.new%>
+               <%= form_for(@question,:url => { :controller =>'questions', :action => 'add_question'}, :html => { :method => :post }) do |f| %>
+               <div class="field">
+                  <%= f.label :Question %><br />
+                  <%= f.text_area :question,  autofocus: true, :class => 'form-control' %>
+                  <%= f.label :answer %><br />
+                  <%= f.label :question_weight %><br />
+                  <%= f.number_field :weight, :class => 'text_field', :step => 'any' %>
+                  
+                  
+               </div>
+               <br>
+               <div class="actions">
+                  <%= f.submit "Add", :class => 'btn btn-primary' %>
+               </div>
+               <% end %>
+            </div>
+         </div>
+      </div>
+   </div>
+<%if @quiz.questions.count !=0%>
+   <div class="container-fluid">
+      <div class="lock-container">
+         <h1 style="color: black">Edit Question</h1>
+         <%count=0%>
+			<% @quiz.questions.each do |question| %>
+			<%count=count+1%>
+         <div class="panel panel-default text-center">
+            <br>
+
+	            <div class="panel-body">
+			<h1 style="color: black">Question<%=count%></h1>
+	            <%@question=Question.new%>
+	               <%= form_for(question,:url => { :controller =>'questions', :action => 'update_question'}, :html => { :method => :put }) do |f| %>
+	               <div class="field">
+	               	<%= f.hidden_field :id, :value => question.id %>
+	                  <%= f.label :Question %><br />
+	                  <%= f.text_area :question,  autofocus: true, :class => 'form-control' %>
+	                  <%= f.label :answer %><br />
+	                  <%= f.check_box :answer, :class => 'form-control' %>
+	                  <%= f.label :question_weight %><br />
+	                  <%= f.number_field :question_weight, :class => 'text_field', :step => 'any' %>
+	                  
+	                  
+	               </div>
+	               <br>
+	               <div class="actions">
+	                  <%= f.submit "Edit", :class => 'btn btn-primary' %>
+	               </div>
+	               <% end %>
+	            </div>
+         </div>
+            <%end%>
+      </div>
+   </div>
+<%end%>
