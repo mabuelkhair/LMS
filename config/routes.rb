@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :quizzes
   get 'user/profile' , :as => :user
 
   put 'user/profile.:id' => 'user#update'
@@ -37,6 +36,7 @@ Rails.application.routes.draw do
   # get 'courses/:id/joinrequests' =>'courses#join_requests'
   
   resources :courses do
+    resources :quizzes
     resources :announcements
     resources :assignments do
       resources :solutions
