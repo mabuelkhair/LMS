@@ -1,14 +1,22 @@
-<p id="notice">
-    <%= notice %>
-</p>
-
     <body class="breakpoint-1024">
         <div class="container-fluid">
             <div class="page-header">
-                <h1 class="h3 pull-left margin-none">Courses</h1>
+                <h1 style="text-align: center;">Courses</h1>
                 
                 <div class="clearfix"></div>
             </div>
+            <%if @courses.count == 0 then %>
+                    <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="media media-clearfix-xs-min">
+                        <div class="media-body">
+                            <h3 class="media-heading h4">There are no courses</h3>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <%end%>
              <% @courses.each do |course| %>
             <div class="panel panel-default">
                 <div class="panel-body">

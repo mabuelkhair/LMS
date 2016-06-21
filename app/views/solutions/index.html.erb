@@ -1,48 +1,66 @@
 <% if current_user.id!=@course.owner.id then controller.redirect_to courses_path end%>
-    <p id="notice">
-        <%= notice %>
-    </p>
+<%count=0%>
 
     <body class="breakpoint-1024">
         <div class="container-fluid">
             <div class="page-header">
-                <h1 class="h3 pull-left margin-none">Solutions</h1>
+                <h1 style="text-align: center;">Solutions</h1>
                 <div class="clearfix"></div>
             </div>
-            <% @solutions.each do |solution| %>
-                <div class="panel panel-default">
-                    <div class="panel-body">
+        <%if @solutions.count == 0 then %>
+                    <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="media media-clearfix-xs-min">
                         <div class="media-body">
-                            <%if solution.grade.nil? then %>
-                                <p style='font-size: 20px;text-align: right'>Grade: Not graded yet</p>
-                                <%else%>
-                                    <p style='font-size: 20px;text-align: right'>Grade:
-                                        <%=solution.grade%>
-                                    </p>
-                                    <%end%>
-                                        <p style='font-size: 20px'>email:
-                                            <%=User.find(solution.student_id).email%>
-                                        </p>
-                                        <p style='font-size: 20px'>submitted at:
-                                            <%=solution.created_at%>
-                                        </p>
-                                        <p>
-                                            <%= link_to "Open content", solution.attachment_url ,{:style=>'color:#FFFFFF;', :class => "btn btn-primary"}%>
-
-                                                
-               <%= form_tag "/solutions/"+solution.id.to_s, :name => "update", :method => "put" do %>
-                                                <label>Grade: </label><input name='solution[grade]' type="number" step="any">
-                                                    <input  type='submit' value='submit' class='btn btn-primary '>
-                                                 <% end %>
-                                        </p>
-
+                            <h3 class="media-heading h4">There are no Solutions</h3>
+                            
                         </div>
                     </div>
                 </div>
-
+            </di  v>
+        <%else%>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Email</th>
+                        <th>Solution</th>
+                        <th>Submitted at</th>
+                        <th>Grade</th>
+                        <th>Edit grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @solutions.each do |solution| %>
+                    <%count = count +1 %>
+                        <tr>
+                            <th scope="row"><%=count%></th>
+                            <td>
+                                <%=User.find(solution.student_id).email%>
+                            </td>
+                            <td>
+                                <%= link_to "Open content", solution.attachment_url ,{:style=>'color:#FFFFFF;', :class => "btn btn-primary"}%>
+                            </td>
+                            <td>
+                                <%=solution.created_at%>
+                            </td>
+                            <%if solution.grade.nil? then %>
+                                <td>Not graded yet</td>
+                                <%= best_in_place [@course,@assignment,solution], :grade %>
+                                <%else%>
+                                    <td>
+                                        
+                                <%= best_in_place [@course,@assignment,solution], :grade %>
+                                    </td>
+                                    <%end%>
+                                     <%= form_tag "/solutions/"+solution.id.to_s, :name => "update", :method => "put" do %>
+                                     <td><input name='solution[grade]' type="number" step="any">
+                                                    <input  type='submit' value='submit' class='btn btn-primary '></td>
+                                      <% end %>
+                        </tr>
         </div>
         <% end %>
+            </tbody>
+            </table>
     </body>
-
-
-
+<%end%>
