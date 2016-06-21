@@ -1,19 +1,27 @@
 <% if !in_course() then controller.redirect_to courses_path end%>
-<p id="notice">
-    <%= notice %>
-</p>
-
 <body class="breakpoint-1024">
     <div class="container-fluid">
         <div class="page-header">
-            <h1 class="h3 pull-left margin-none">Assignments</h1>
+            <h1 style="text-align: center;">Assignments</h1>
             <div class="clearfix"></div>
         </div>
+        <%if @assignments.count == 0 then %>
+                            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="media media-clearfix-xs-min">
+                        <div class="media-body">
+                            <h3 class="media-heading h4">There are no assignments</h3>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <%end%>
         <% @assignments.each do |assignment| %>
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="media media-clearfix-xs-min">
-                        <div class="media-left"><a href="http://themekit.aws.ipv4.ro/dist/themes/learning/lesson.html"><span class="media-object icon-block bg-default"><i class="fa fa-github"></i></span></a></div>
+                        <div class="media-left"><a href=""><span class="media-object icon-block bg-default"><i class="fa fa-github"></i></span></a></div>
                         <div class="media-body">
                             <h3 class="media-heading h4"><%= assignment.name %></h3>
                             <% if current_user.id==assignment.course.owner.id %>
