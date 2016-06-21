@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :quizzes
   get 'user/profile' , :as => :user
 
   put 'user/profile.:id' => 'user#update'
