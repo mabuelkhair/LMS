@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617050626) do
+ActiveRecord::Schema.define(version: 20160621204908) do
 
   create_table "announcements", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -96,6 +96,30 @@ ActiveRecord::Schema.define(version: 20160617050626) do
   create_table "join_requests", force: :cascade do |t|
     t.integer  "course_id",    limit: 4
     t.integer  "requester_id", limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.integer  "quiz_id",           limit: 4
+    t.text     "question",          limit: 65535
+    t.integer  "number_of_options", limit: 4
+    t.float    "weight",            limit: 24,    default: 1.0
+    t.string   "answer1",           limit: 255
+    t.string   "answer2",           limit: 255
+    t.string   "answer3",           limit: 255
+    t.string   "answer4",           limit: 255
+    t.string   "answer5",           limit: 255
+    t.string   "answer6",           limit: 255
+    t.string   "answer7",           limit: 255
+    t.string   "answer8",           limit: 255
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+  end
+
+  create_table "quizzes", force: :cascade do |t|
+    t.integer  "course_id",  limit: 4
+    t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
