@@ -8,6 +8,13 @@ class QuizzesController < ApplicationController
   end
 
   def solve_quiz
+
+    if @quiz.due_date < Date.today 
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
     quiz_id=params[:id]
     course_id=params[:course_id]
     quiz_answers = params[:question]
@@ -18,8 +25,8 @@ class QuizzesController < ApplicationController
       if question.answer1 == quiz_answers.values[index] then
         my_grade = my_grade + question.weight
       end
-
     end
+    Answer.create(:user_id => current_user.id,:quiz_id => quiz_id,:grade => my_grade ,:total => total_grade)
     respond_to do |format|
         format.html { redirect_to course_quizzes_path(@course), notice: 'Quiz was successfully created.' }
         format.json { render :show, status: :created, location: @quiz }

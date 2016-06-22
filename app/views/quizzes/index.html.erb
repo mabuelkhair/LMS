@@ -25,13 +25,24 @@
                              <br/>
                              <%= link_to 'Model Answer', course_quiz_path(@course, quiz),{:style=>'color:#FFFFFF;', :class => "btn btn-primary"} %>
                              <%end%>
-
-                             <% if quiz.due_date >= Date.today %>
+                             <% if current_user.id != @course.owner.id  then %>
+                             <% if quiz.due_date >= Date.today and not_solved_before(quiz.id) then %>
                                <br/>
-                               <a href="<%=quiz.id%>/solve">
+                               <a href="/courses/<%=@course.id%>/quizzes/<%=quiz.id%>/solve">
                                 <button class = "btn btn-primary">Solve Quiz</button>
                                </a>
 
+                             <%else%>
+                             <i class="fa fa-tasks" aria-hidden="true"></i>Your Grade: 
+                             <% 
+                               grade= Answer.where(:user_id => current_user.id,:quiz_id => quiz.id)
+                               if grade.count==0 then 
+                             %>
+                                <b>0.0</b>
+                                <%else%>
+                                <b><%=grade.first.grade%>/<%=grade.first.total%></b>
+                                <%end%>
+                             <% end%>
                              <%end%>
                              
 
