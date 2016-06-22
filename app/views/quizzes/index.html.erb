@@ -25,6 +25,16 @@
                              <br/>
                              <%= link_to 'Model Answer', course_quiz_path(@course, quiz),{:style=>'color:#FFFFFF;', :class => "btn btn-primary"} %>
                              <%end%>
+
+                             <% if quiz.due_date >= Date.today %>
+                               <br/>
+                               <a href="<%=quiz.id%>/solve">
+                                <button class = "btn btn-primary">Solve Quiz</button>
+                               </a>
+
+                             <%end%>
+                             
+
                         </div>
                     </div>
                 </div>

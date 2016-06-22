@@ -21,7 +21,7 @@ class QuizzesController < ApplicationController
 
     end
     respond_to do |format|
-        format.html { redirect_to [@course,@quiz], notice: 'Quiz was successfully created.' }
+        format.html { redirect_to course_quizzes_path(@course), notice: 'Quiz was successfully created.' }
         format.json { render :show, status: :created, location: @quiz }
     end
   end 
