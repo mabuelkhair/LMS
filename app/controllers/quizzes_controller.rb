@@ -1,5 +1,5 @@
 class QuizzesController < ApplicationController
-  before_action :set_quiz, only: [:show, :edit, :update, :destroy,:solve]
+  before_action :set_quiz, only: [:show, :edit, :update, :destroy,:solve,:solve_quiz]
   before_action :authenticate_user!
   before_action :load_course
 
@@ -8,7 +8,22 @@ class QuizzesController < ApplicationController
   end
 
   def solve_quiz
-    puts params[:user_solutions].first
+    quiz_id=params[:id]
+    course_id=params[:course_id]
+    quiz_answers = params[:question]
+    my_grade = 0.0
+    total_grade = 0.0
+    @quiz.questions.each_with_index do |question,index|
+      total_grade = total_grade + question.weight
+      if question.answer1 == quiz_answers.values[index] then
+        my_grade = my_grade + question.weight
+      end
+
+    end
+    respond_to do |format|
+        format.html { redirect_to [@course,@quiz], notice: 'Quiz was successfully created.' }
+        format.json { render :show, status: :created, location: @quiz }
+    end
   end 
 
   # GET /quizzes

@@ -1,4 +1,5 @@
 <h1 style="text-align: center;"> <%=@quiz.name%></h1>
+<h3 style="text-align: center;"> always last answer selected by default</h3>
 <% answer="assd"%>
 <%= form_for(answer,:url => { :controller =>'quizzes', :action => 'solve_quiz'}, :html => { :method => :post }) do |f| %>
 	<%@quiz.questions.each_with_index  do |question,index|%>
@@ -42,7 +43,7 @@
 							options.each do |option|
 						 %>
 
-							<input type="radio" name="answer<%=index+1%>" value="<%=option%>"> <%=option%><br>
+							<input type="radio" name="question[answer<%=index+1%>]" value="<%=option%>"checked/> <%=option%><br>
 						 <%end%>
 							
 
@@ -51,4 +52,5 @@
 			</div>
 		</div>
 	<%end%>
+	<%= f.submit "Submit", :class => 'btn btn-primary' %>
 <%end%>
