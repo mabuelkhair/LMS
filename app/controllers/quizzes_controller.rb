@@ -1,7 +1,16 @@
 class QuizzesController < ApplicationController
-  before_action :set_quiz, only: [:show, :edit, :update, :destroy]
+  before_action :set_quiz, only: [:show, :edit, :update, :destroy,:solve]
   before_action :authenticate_user!
   before_action :load_course
+
+
+  def solve
+  end
+
+  def solve_quiz
+    puts params[:user_solutions].first
+  end 
+
   # GET /quizzes
   # GET /quizzes.json
   def index
