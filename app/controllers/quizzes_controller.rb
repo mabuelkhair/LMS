@@ -5,11 +5,17 @@ class QuizzesController < ApplicationController
 
 
   def solve
+    if @quiz.due_date < Date.today or !in_course() or solved_before()
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
   end
 
   def solve_quiz
 
-    if @quiz.due_date < Date.today 
+    if @quiz.due_date < Date.today or !in_course() or solved_before()
       respond_to do |format|
         format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
       end
@@ -160,5 +166,12 @@ class QuizzesController < ApplicationController
     end
     def in_course
      ret= (@course.students.include? current_user or @course.owner.id==current_user.id)
-  end
+    end
+    def solved_before 
+       if Answer.where(:quiz_id => @quiz.id , :user_id => current_user.id).count == 0 then 
+        return false
+      else
+        return true
+      end
+    end
 end

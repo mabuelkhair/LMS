@@ -46,6 +46,7 @@
                <a href="<%=course_announcements_path(@course)%>"> <input class="btn btn-primary btn-ms" type="submit" value="Announcements">
                 </a>
                 <a href="<%=course_assignments_path(@course)%>"> <input class="btn btn-primary btn-ms" type="submit" value="Assignments">
+                <a href="/courses/<%=@course.id%>/quizzes"> <input class="btn btn-primary btn-ms" type="submit" value="Quizzes">
             <%end%>
             </a>
         </div>
