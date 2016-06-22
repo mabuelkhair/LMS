@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   post 'courses/:course_id/quizzes/:id/add_question' => 'questions#add_question'
   put 'courses/:course_id/quizzes/:id/update_question' => 'questions#update_question'
+  delete 'courses/:course_id/quizzes/:id/destroy' => 'questions#destroy'
 
   get 'user/profile' , :as => :user
 

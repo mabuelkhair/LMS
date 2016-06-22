@@ -16,6 +16,13 @@ class QuestionsController < ApplicationController
     weight = params[:question]["weight"]
 
     course = Course.find(course_id)
+    if current_user.id!=course.owner.id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
+
     if !(course.nil?) and current_user.id == course.owner.id then
       Question.create(:question => question ,:answer1 => answer1,:answer2 => answer2,:answer3 => answer3,:answer4 => answer4,:answer5 => answer5,:answer6 => answer6,:answer7 => answer7,:answer8 => answer8, :quiz_id => quiz_id,:weight => weight,:number_of_options => number_of_options)
     end
@@ -39,10 +46,30 @@ class QuestionsController < ApplicationController
     object.quiz_id=params[:id]
     object.weight = params[:question]["weight"]
     course = Course.find(object.quiz.course.id)
+    if current_user.id!=course.owner.id
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
+
     if !(course.nil?) and current_user.id == course.owner.id then
       object.save
     end
     redirect_to controller: 'quizzes', action: 'edit', course_id: course_id, id: object.quiz.id
+  end
+  def destroy
+
+    course = Course.find(params[:course_id])
+    question_id = params[:question]["id"]
+     if current_user.id == course.owner.id then
+        Question.destroy(question_id)
+     else
+        respond_to do |format|
+            format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+        end
+     end
+   redirect_to controller: 'quizzes', action: 'edit', course_id: params[:course_id], id: params[:id] 
   end
 
 end

@@ -112,6 +112,14 @@
 	                  <%= f.submit "Edit", :class => 'btn btn-primary' %>
 	               </div>
 	               <% end %>
+                     
+                  <%= form_for(question,:url => { :controller =>'questions', :action => 'destroy'}, :html => { :method => :delete }) do |f| %>
+
+                     <%= f.hidden_field :id, :value => question.id %>
+                     <div class="actions">
+                        <%= f.submit "Delete", :class => 'btn btn-primary' %>
+                     </div>
+                     <%end%>
 	            </div>
          </div>
             <%end%>
