@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
 
+
+
+  get 'courses/:course_id/newquiz' => 'quizzes#new'
+  get 'courses/:course_id/quizzes/:id/solve' =>'quizzes#solve'
+  post 'courses/:course_id/quizzes/:id/solvequiz' =>'quizzes#solve_quiz'
+
+  post 'courses/:course_id/quizzes/:id/add_question' => 'questions#add_question'
+  put 'courses/:course_id/quizzes/:id/update_question' => 'questions#update_question'
+  delete 'courses/:course_id/quizzes/:id/destroy' => 'questions#destroy'
+
   get 'user/profile' , :as => :user
 
   put 'user/profile.:id' => 'user#update'
@@ -36,6 +46,7 @@ Rails.application.routes.draw do
   # get 'courses/:id/joinrequests' =>'courses#join_requests'
   
   resources :courses do
+    resources :quizzes
     resources :announcements
     resources :assignments do
       resources :solutions

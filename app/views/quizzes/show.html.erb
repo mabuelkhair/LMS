@@ -1,0 +1,36 @@
+ <h1 style="text-align: center;"><%=@quiz.name%> model answers</h1>
+<%if @quiz.questions.count == 0 then %>
+                <div class="panel panel-default">
+    <div class="panel-body">
+        <div class="media media-clearfix-xs-min">
+            <div class="media-body">
+                <h3 class="media-heading h4">There are no questions</h3>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<%else%>
+
+ <table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Question</th>
+      <th>Answer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+<%count=0%>
+<% @quiz.questions.each do |question| %>
+
+			<%count=count+1%>
+	  <th scope="row"><%=count%></th>
+      <td><%=question.question%></td>
+      <td><%=question.answer1%></td>
+    </tr>
+ <%end%>
+  </tbody>
+</table>
+<%end%>

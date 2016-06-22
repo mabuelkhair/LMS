@@ -1,0 +1,128 @@
+   
+   <div class="container-flu/">
+      <div class="lock-container">
+         <h1 style="color: black">Edit Quiz</h1>
+         <div class="panel panel-default text-center">
+            <br>
+            <div class="panel-body">
+               <%= form_for([@course,@quiz]) do |f| %>
+                 <% if @quiz.errors.any? %>
+                   <div id="error_explanation">
+                      <h2><%= pluralize(@quiz.errors.count, "error") %> prohibited this quiz from being saved:</h2>
+
+                      <ul>
+                      <% @quiz.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                      <% end %>
+                      </ul>
+                  </div>
+                <%end%>
+               <div class="field">
+                  <%= f.label :name %><br />
+                  <%= f.text_field :name, autofocus: true, :class => 'form-control' %>
+               </div>
+               <br>
+               <div class="actions">
+                  <%= f.submit "Update", :class => 'btn btn-primary' %>
+               </div>
+               <% end %>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+   <div class="container-fluid">
+      <div class="lock-container">
+         <h1 style="color: black">Add Question</h1>
+         <div class="panel panel-default text-center">
+            <br>
+            <div class="panel-body">
+            <%@question=Question.new%>
+               <%= form_for(@question,:url => { :controller =>'questions', :action => 'add_question'}, :html => { :method => :post }) do |f| %>
+               <div class="field">
+                  <%= f.label :Question %><br />
+                  <%= f.text_area :question,  autofocus: true, :class => 'form-control' %>
+                  <div class="form-group">
+				  <label>Number of options that User will select from:</label>
+                  <%= f.select :number_of_options, ['2','3','4','5','6','7','8'],:class => 'form-control'%>
+         <h4 style="color: black">Options(first one is the correct one):</h4>
+                  Answer1: <%= f.text_field :answer1 %>
+                  Answer2: <%= f.text_field :answer2 %>
+                  Answer3: <%= f.text_field :answer3 %>
+                  Answer4: <%= f.text_field :answer4 %><br/>
+                  Answer5: <%= f.text_field :answer5 %>
+                  Answer6: <%= f.text_field :answer6 %>
+                  Answer7: <%= f.text_field :answer7 %>
+                  Answer8: <%= f.text_field :answer8 %><br/>
+                  <%= f.label :question_weight %><br />
+                  <%= f.number_field :weight, :class => 'text_field', :step => 'any' %>
+                  
+                  
+               </div>
+               <br>
+               <div class="actions">
+                  <%= f.submit "Add", :class => 'btn btn-primary' %>
+               </div>
+               <% end %>
+            </div>
+         </div>
+      </div>
+   </div>
+<%if @quiz.questions.count !=0%>
+   <div class="container-fluid">
+      <div class="lock-container">
+         <h1 style="color: black">Edit Question</h1>
+         <%count=0%>
+			<% @quiz.questions.each do |question| %>
+			<%count=count+1%>
+         <div class="panel panel-default text-center">
+            <br>
+
+	            <div class="panel-body">
+			<h1 style="color: black">Question<%=count%></h1>
+	               <%= form_for(question,:url => { :controller =>'questions', :action => 'update_question'}, :html => { :method => :put }) do |f| %>
+	               <div class="field">
+               <div class="field">
+               <input type="hidden" value="<%=question.id%>" id="question[id]"></input>
+                  <%= f.label :Question %><br />
+                  <%= f.text_area :question,  autofocus: true, :class => 'form-control' %>
+                  <div class="form-group">
+				  <label>Number of options that User will select from:</label>
+                  <%= f.select :number_of_options, ['2','3','4','5','6','7','8'],:class => 'form-control'%>
+         <h4 style="color: black">Options(first one is the correct one):</h4>
+         		  <%= f.hidden_field :id, :value => question.id %>
+                  Answer1: <%= f.text_field :answer1 %>
+                  Answer2: <%= f.text_field :answer2 %>
+                  Answer3: <%= f.text_field :answer3 %>
+                  Answer4: <%= f.text_field :answer4 %><br/>
+                  Answer5: <%= f.text_field :answer5 %>
+                  Answer6: <%= f.text_field :answer6 %>
+                  Answer7: <%= f.text_field :answer7 %>
+                  Answer8: <%= f.text_field :answer8 %><br/>
+                  <%= f.label :question_weight %><br />
+                  <%= f.number_field :weight, :class => 'text_field', :step => 'any' %>
+                  
+                  
+               </div>
+               <br>
+	               </div>
+	               <br>
+	               <div class="actions">
+	                  <%= f.submit "Edit", :class => 'btn btn-primary' %>
+	               </div>
+	               <% end %>
+                     
+                  <%= form_for(question,:url => { :controller =>'questions', :action => 'destroy'}, :html => { :method => :delete }) do |f| %>
+
+                     <%= f.hidden_field :id, :value => question.id %>
+                     <div class="actions">
+                        <%= f.submit "Delete", :class => 'btn btn-primary' %>
+                     </div>
+                     <%end%>
+	            </div>
+         </div>
+            <%end%>
+      </div>
+   </div>
+<%end%>

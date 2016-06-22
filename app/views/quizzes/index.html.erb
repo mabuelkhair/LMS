@@ -1,0 +1,100 @@
+    <body class="breakpoint-1024">
+        <div class="container-fluid">
+            <div class="page-header">
+                <h1 style="text-align: center;">Quizzes</h1>
+                <div class="clearfix"></div>
+            </div>
+            <% @quizzes.each do |quiz| %>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="media media-clearfix-xs-min">
+                        <div class="media-body">
+                            <h3 class="media-heading h4"><i class="fa fa-newspaper-o"></i>Name: <b><%=quiz.name%></b> </h3>
+
+                            <i class="fa fa-calendar fa-fw"></i>Due date: <b><%=quiz.due_date%></b>
+                            <br/>
+                            <!--Model Answer:- <%= link_to quiz.name , [@course,quiz]%> 
+                            <br/>
+                            -->
+                            <% if current_user.id==@course.owner.id || current_user.is_admin==1 %>
+                            <%= link_to 'Edit', edit_course_quiz_path(@course,quiz) %>&nbsp;
+                             <%= link_to 'Destroy', [@course,quiz], method: :delete, data: { confirm: 'Are you sure?' } %>
+                             
+                             <% end %>
+                             <% if current_user.id==@course.owner.id || quiz.due_date < Date.today %>
+                             <br/>
+                             <%= link_to 'Model Answer', course_quiz_path(@course, quiz),{:style=>'color:#FFFFFF;', :class => "btn btn-primary"} %>
+                             <%end%>
+                             <% if current_user.id != @course.owner.id  then %>
+                             <% if quiz.due_date >= Date.today and not_solved_before(quiz.id) then %>
+                               <br/>
+                               <a href="/courses/<%=@course.id%>/quizzes/<%=quiz.id%>/solve">
+                                <button class = "btn btn-primary">Solve Quiz</button>
+                               </a>
+
+                             <%else%>
+                             <i class="fa fa-tasks" aria-hidden="true"></i>Your Grade: 
+                             <% 
+                               grade= Answer.where(:user_id => current_user.id,:quiz_id => quiz.id)
+                               if grade.count==0 then 
+                             %>
+                                <b>0.0</b>
+                                <%else%>
+                                <b><%=grade.first.grade%>/<%=grade.first.total%></b>
+                                <%end%>
+                             <% end%>
+                             <%end%>
+                             
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% end %>
+        </div>
+    </body>
+
+ <% if current_user.id==@course.owner.id then%>
+<!-- new quiz -->
+<body class="login">
+
+<div id="content">
+   <div class="container-fluid">
+      <div class="lock-container">
+         <h1 style="color: black;text-align: center;">Create New Quiz</h1>
+         <div class="panel panel-default text-center">
+            <br>
+            <div class="panel-body">
+            <% @quiz=@course.quizzes.new%>
+               <%= form_for([@course,@quiz]) do |f| %>
+                 <% if @quiz.errors.any? %>
+                   <div id="error_explanation">
+      <h2><%= pluralize(@quiz.errors.count, "error") %> prohibited this quiz from being saved:</h2>
+
+      <ul>
+      <% @quiz.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+    <%end%>
+               <div class="field">
+                  <%= f.label :name %><br />
+                  <%= f.text_field :name, autofocus: true, :class => 'form-control' %>
+               </div>
+
+                  <%= f.label :Due_Date %><br />
+            <input min="<%=(Time.now).strftime("%Y-%m-%d")%>"class="form-control" type="date" name="quiz[due_date]" id="quiz_due_date">
+
+               <br>
+               <div class="actions">
+                  <%= f.submit "Create", :class => 'btn btn-primary' %>
+               </div>
+               <% end %>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</body>
+<%end%>

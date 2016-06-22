@@ -1,0 +1,56 @@
+<h1 style="text-align: center;"> <%=@quiz.name%></h1>
+<h3 style="text-align: center;"> always last answer selected by default</h3>
+<% answer="assd"%>
+<%= form_for(answer,:url => { :controller =>'quizzes', :action => 'solve_quiz'}, :html => { :method => :post }) do |f| %>
+	<%@quiz.questions.each_with_index  do |question,index|%>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="media media-clearfix-xs-min">
+					<div class="media-body">
+						<p >
+							<%=index+1%>- <%=question.question%>
+						</p>
+						<%  
+							answers = Array.new
+							if !question.answer2.nil? and question.answer2.length>0 then
+								answers.push(question.answer2)
+							end
+
+							if !question.answer3.nil? and question.answer3.length>0 then
+								answers.push(question.answer3)
+							end
+
+							if !question.answer4.nil? and question.answer4.length>0 then
+								answers.push(question.answer4)
+							end
+							if !question.answer5.nil? and question.answer5.length>0  then
+								answers.push(question.answer5)
+							end
+							if !question.answer6.nil? and question.answer6.length>0 then
+								answers.push(question.answer6)
+							end
+							if !question.answer7.nil? and question.answer7.length>0 then
+								answers.push(question.answer7)
+							end
+
+							if !question.answer8.nil? and question.answer8.length>0 then
+								answers.push(question.answer8)
+							end
+							answers = answers.shuffle
+							options = answers[0..question.number_of_options-2]
+							options.push(question.answer1)
+							options=options.shuffle
+							options.each do |option|
+						 %>
+
+							<input type="radio" name="question[answer<%=index+1%>]" value="<%=option%>"checked/> <%=option%><br>
+						 <%end%>
+							
+
+					</div>
+				</div>
+			</div>
+		</div>
+	<%end%>
+	<%= f.submit "Submit", :class => 'btn btn-primary' %>
+<%end%>
