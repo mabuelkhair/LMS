@@ -46,11 +46,9 @@
                             </td>
                             <%if solution.grade.nil? then %>
                                 <td>Not graded yet</td>
-                                <%= best_in_place [@course,@assignment,solution], :grade %>
                                 <%else%>
                                     <td>
-                                        
-                                <%= best_in_place [@course,@assignment,solution], :grade %>
+                                        <%=solution.grade%>
                                     </td>
                                     <%end%>
                                      <%= form_tag "/solutions/"+solution.id.to_s, :name => "update", :method => "put" do %>
