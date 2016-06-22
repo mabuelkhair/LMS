@@ -19,7 +19,12 @@
                             <% if current_user.id==@course.owner.id || current_user.is_admin==1 %>
                             <%= link_to 'Edit', edit_course_quiz_path(@course,quiz) %>&nbsp;
                              <%= link_to 'Destroy', [@course,quiz], method: :delete, data: { confirm: 'Are you sure?' } %>
+                             
                              <% end %>
+                             <% if current_user.id==@course.owner.id || quiz.due_date < Date.today %>
+                             <br/>
+                             <%= link_to 'Model Answer', course_quiz_path(@course, quiz),{:style=>'color:#FFFFFF;', :class => "btn btn-primary"} %>
+                             <%end%>
                         </div>
                     </div>
                 </div>

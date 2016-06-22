@@ -5,12 +5,30 @@ class QuizzesController < ApplicationController
   # GET /quizzes
   # GET /quizzes.json
   def index
+    if !in_course() then
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
     @quizzes = @course.quizzes.all
   end
 
   # GET /quizzes/1
   # GET /quizzes/1.json
   def show
+    if !in_course() then
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
+    if current_user.id!=@course.owner.id and @quiz.due_date > Date.today then
+      respond_to do |format|
+        format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
+      end
+      return false
+    end
   end
 
   # GET /quizzes/new
@@ -109,4 +127,7 @@ class QuizzesController < ApplicationController
     def load_course
       @course = Course.find(params[:course_id])
     end
+    def in_course
+     ret= (@course.students.include? current_user or @course.owner.id==current_user.id)
+  end
 end
