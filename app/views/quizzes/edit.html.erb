@@ -1,5 +1,5 @@
    
-   <div class="container-fluid">
+   <div class="container-flu/">
       <div class="lock-container">
          <h1 style="color: black">Edit Quiz</h1>
          <div class="panel panel-default text-center">
@@ -43,7 +43,18 @@
                <div class="field">
                   <%= f.label :Question %><br />
                   <%= f.text_area :question,  autofocus: true, :class => 'form-control' %>
-                  <%= f.label :answer %><br />
+                  <div class="form-group">
+				  <label>Number of options that User will select from:</label>
+                  <%= f.select :number_of_options, ['2','3','4','5','6','7','8'],:class => 'form-control'%>
+         <h4 style="color: black">Options(first one is the correct one):</h4>
+                  Answer1: <%= f.text_field :answer1 %>
+                  Answer2: <%= f.text_field :answer2 %>
+                  Answer3: <%= f.text_field :answer3 %>
+                  Answer4: <%= f.text_field :answer4 %><br/>
+                  Answer5: <%= f.text_field :answer5 %>
+                  Answer6: <%= f.text_field :answer6 %>
+                  Answer7: <%= f.text_field :answer7 %>
+                  Answer8: <%= f.text_field :answer8 %><br/>
                   <%= f.label :question_weight %><br />
                   <%= f.number_field :weight, :class => 'text_field', :step => 'any' %>
                   
@@ -70,18 +81,31 @@
 
 	            <div class="panel-body">
 			<h1 style="color: black">Question<%=count%></h1>
-	            <%@question=Question.new%>
 	               <%= form_for(question,:url => { :controller =>'questions', :action => 'update_question'}, :html => { :method => :put }) do |f| %>
 	               <div class="field">
-	               	<%= f.hidden_field :id, :value => question.id %>
-	                  <%= f.label :Question %><br />
-	                  <%= f.text_area :question,  autofocus: true, :class => 'form-control' %>
-	                  <%= f.label :answer %><br />
-	                  <%= f.check_box :answer, :class => 'form-control' %>
-	                  <%= f.label :question_weight %><br />
-	                  <%= f.number_field :question_weight, :class => 'text_field', :step => 'any' %>
-	                  
-	                  
+               <div class="field">
+               <input type="hidden" value="<%=question.id%>" id="question[id]"></input>
+                  <%= f.label :Question %><br />
+                  <%= f.text_area :question,  autofocus: true, :class => 'form-control' %>
+                  <div class="form-group">
+				  <label>Number of options that User will select from:</label>
+                  <%= f.select :number_of_options, ['2','3','4','5','6','7','8'],:class => 'form-control'%>
+         <h4 style="color: black">Options(first one is the correct one):</h4>
+         		  <%= f.hidden_field :id, :value => question.id %>
+                  Answer1: <%= f.text_field :answer1 %>
+                  Answer2: <%= f.text_field :answer2 %>
+                  Answer3: <%= f.text_field :answer3 %>
+                  Answer4: <%= f.text_field :answer4 %><br/>
+                  Answer5: <%= f.text_field :answer5 %>
+                  Answer6: <%= f.text_field :answer6 %>
+                  Answer7: <%= f.text_field :answer7 %>
+                  Answer8: <%= f.text_field :answer8 %><br/>
+                  <%= f.label :question_weight %><br />
+                  <%= f.number_field :weight, :class => 'text_field', :step => 'any' %>
+                  
+                  
+               </div>
+               <br>
 	               </div>
 	               <br>
 	               <div class="actions">
