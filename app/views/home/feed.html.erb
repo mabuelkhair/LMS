@@ -21,6 +21,7 @@
         </div>
       </div>
     </div>
+    <% @posts.each do |post| %>
     <div class="col-xs-12 col-md-6 col-lg-4 item">
       <div class="timeline-block">
         <div class="panel panel-default">
@@ -28,26 +29,33 @@
           <div class="panel-heading">
             <div class="media">
               <div class="media-left">
-                <a href="#">
-                  <img src="http://themekit-v4.themekit.io/dist/themes/social-1/images/people/50/guy-2.jpg" class="media-object">
-                </a>
+                 <a href="<%="/user/#{post.user.id}/profile"%>">
+                  <% if post.user.avatar.url.present? == true then %>
+                     
+                          <img src=<%=post.user.avatar.url%> alt="" class="profile-img-panel">
+                      
+                  <% else %>
+                            <img src="/login.png" alt="" class="profile-img-panel">
+                  <% end %>
+                 </a>
               </div>
               <div class="media-body">
-                <a href="#" class="pull-right text-muted"><i class="icon-reply-all-fill fa fa-2x "></i></a>
+              <% if post.user.id == current_user.id then%>
+                <a href="<%="/post/#{post.id}/del"%>" class="pull-right text-muted"><%= fa_icon "trash 1x" %></a>
+              <% end %>
+                <a href="<%="/user/#{post.user.id}/profile"%>"><%=post.user.email.split(/@/).first %></a>
 
-                <a href="#">Jonathan</a>
-
-                <span>on 15th January, 2014</span>
+                <span>on <%=post.created_at.to_formatted_s(:long) %></span>
               </div>
             </div>
           </div>
 
           <div class="panel-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad blanditiis perspiciatis praesentium quaerat repudiandae soluta? Cum doloribus esse et eum facilis impedit officiis omnis optio, placeat, quia quo reprehenderit sunt velit?
-              Asperiores cumque deserunt eveniet hic reprehenderit sit, ut voluptatum?</p>
+            <p><%=post.content %></p>
           </div>
         </div>
       </div>
     </div>
+    <% end %>
 
 </div>

@@ -32,6 +32,8 @@ Rails.application.routes.draw do
 
   post 'post/new' => 'home#add_post'
 
+  get 'post/:id/del' => 'home#delete_post'
+
   
   # get 'courses/:id/joinrequests' =>'courses#join_requests'
   
