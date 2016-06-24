@@ -3,7 +3,6 @@ class CoursesController < ApplicationController
   # before_action :authenticate_user!
 
   def related_courses
-    authenticate_user!
     filed_of_intrests = @course.tags.split(/,/)
     filed_of_intrests=filed_of_intrests.map!(&:downcase)
     @selected = []
@@ -97,7 +96,7 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    authenticate_user!
+    # authenticate_user!
   end
 
   # GET /courses/new
