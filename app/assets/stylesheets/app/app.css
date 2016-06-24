@@ -9001,6 +9001,9 @@ input[type=file]:focus {
   outline: 0 !important;
   outline-offset: 0 !important;
 }
+input[type=file]{
+  padding-bottom: 50px;
+}
 input[type=checkbox]:focus,
 input[type=radio]:focus,
 input[type=checkbox]:focus + label::before,
