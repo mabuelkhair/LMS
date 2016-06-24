@@ -1,7 +1,24 @@
 <div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-body">
-            <div class="media"><span class="pull-right icon-block double media-object bg-lightred"><i class="fa fa-github"></i></span>
+            <div class="media">
+            <span class="pull-right icon-block double media-object">
+            <% if @course.avatar.url.present? == true then %>
+                    <img src=<%=@course.avatar.url%> alt="" class="profile-img">
+            <% else %>
+                <span class="pull-right icon-block double media-object bg-lightred">
+                    <i class="fa fa-github"></i>
+                </span>
+            <% end %>
+            </span>
+            <% if current_user %>
+            <span class="pull-right">
+                <%= form_for @course, html: { multipart: true } do |f| %>
+                <%= f.file_field :avatar ,:required => true %>
+                <%= f.submit "Change avatar", class: "btn btn-primary"  %>
+            <% end %>
+            <% end %>
+            </span>
                 <div class="media-body">
                     <h3 class="media-heading h4"><%=@course.name%> </h3>
                     <% if current_user %>

@@ -1,4 +1,5 @@
 class Course < ActiveRecord::Base
+	mount_uploader :avatar, AvatarUploader
 	has_many :chapters , class_name: 'Chapter', foreign_key: 'course_id'
 	has_many :announcements
 	has_many :assignments
