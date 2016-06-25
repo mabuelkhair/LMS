@@ -21,7 +21,12 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="media media-clearfix-xs-min">
-                        <div class="media-left"><%= link_to  "" , course%><span class="media-object icon-block bg-default"><i class="fa fa-book"></i></span></a></div>
+                        <div class="media-left"><%= link_to  "" , course%><span class="media-object icon-block bg-default">
+                    <% if course.avatar.url.present? == true then %>
+                      <img src=<%=course.avatar.url%> alt="" class="img-responsive">
+                    <% end %>
+
+                        <i class="fa fa-book"></i></span></a></div>
                         <div class="media-body">
                             <h3 class="media-heading h4"><%= link_to  course.name , course%> </h3>
                             <% if current_user %>
