@@ -10,13 +10,13 @@ class HomeController < ApplicationController
   def add_post
     authenticate_user!
     post= Post.new(:content => params[:status])
-    current_user.post << post
+    current_user.posts << post
     redirect_to(:controller => 'home' ,:action => 'index')
   end
 
    def delete_post
     authenticate_user!
-    post = current_user.post.find_by(params[:id])
+    post = current_user.posts.find_by(params[:id])
     if post.nil? then
      redirect_to(:controller => 'home' ,:action => 'index')
      return
