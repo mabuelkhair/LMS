@@ -1,14 +1,14 @@
 <% if current_user.id!=@course.owner.id then controller.redirect_to courses_path end%>
 <%count=0%>
-
+    <center>
     <body class="breakpoint-1024">
-        <div class="container-fluid" style="width: 700px;">
+        <!-- <div class="container-fluid" style="width: 700px; padding-left: 0px;padding-right: 0px"> -->
             <div class="page-header">
                 <h1 style="text-align: center;">Solutions</h1>
                 <div class="clearfix"></div>
             </div>
         <%if @solutions.count == 0 then %>
-                    <div class="panel panel-default">
+            <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="media media-clearfix-xs-min">
                         <div class="media-body">
@@ -17,8 +17,9 @@
                         </div>
                     </div>
                 </div>
-            </di  v>
+            </div>
         <%else%>
+        <div class="panel panel-default" style="min-width: 700px; margin-right: 10%; margin-left: 10%">
             <table class="table table-sm">
                 <thead>
                     <tr>
@@ -39,10 +40,10 @@
                                 <%=User.find(solution.student_id).email%>
                             </td>
                             <td>
-                                <%= link_to "Open content", solution.attachment_url ,{:style=>'color:#FFFFFF;', :class => "btn btn-primary"}%>
+                                <%= link_to "Open content", solution.attachment_url ,{:style=>'color:#FFFFFF;', :class => "btn btn-primary"} %>
                             </td>
                             <td>
-                                <%=solution.created_at%>
+                                <%=solution.created_at.to_formatted_s(:long)%>
                             </td>
                             <%if solution.grade.nil? then %>
                                 <td>Not graded yet</td>
@@ -58,7 +59,9 @@
                         </tr>
         </div>
         <% end %>
-            </tbody>
-            </table>
+        </tbody>
+    </table>
+    <!-- </div> -->
     </body>
+    </center>
 <%end%>

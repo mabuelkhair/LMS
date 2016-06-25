@@ -60,7 +60,7 @@
                                         <p style="text-align: right">You have submit the assignment</p>
                                         <% solution=Solution.where(:course_id => @course.id , :assignment_id => assignment.id ).first%>
                                 <%if solution.grade.nil? then %>
-                                <p style='font-size: 20px;text-align: right'>Grade: Not graded yet</p>
+                                <p style='font-size: 20px;text-align: right'>Grade: No grade</p>
                                 <%else%>
                                     <p style='font-size: 20px;text-align: right'>Grade:
                                         <%=solution.grade%>
