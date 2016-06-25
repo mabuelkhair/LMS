@@ -2315,12 +2315,19 @@ a {
 a:hover,
 a:focus {
   color: #186860;
+  background-color: transparent !important;
   text-decoration: underline;
 }
 a:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
+}
+li a:hover, .navbar-brand ul li a:hover{
+  background-color: #22958b !important;
+}
+.dropdown-menu li a:hover{
+    background-color: #fff !important;
 }
 figure {
   margin: 0;
