@@ -69,7 +69,15 @@ class CoursesController < ApplicationController
     redirect_to(:action => 'join_requests')
     if current_user.id == @course.owner_id
      req_id=params[:requester_id]
-     @course.students << User.find(req_id)
+
+     requester = User.find(req_id)
+     @course.students << requester
+
+     fields_of_interest = @course.tags.split(/,/)
+        fields_of_interest.each do |tag|
+          requester.interests.create(name: tag)  
+      end
+      
      JoinRequest.where(:course_id =>@course.id,:requester_id => req_id).destroy_all
    end
   end
