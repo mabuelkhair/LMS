@@ -16,7 +16,11 @@ class HomeController < ApplicationController
 
    def delete_post
     authenticate_user!
-    post= current_user.post.find(params[:id])
+    post = current_user.post.find_by(params[:id])
+    if post.nil? then
+     redirect_to(:controller => 'home' ,:action => 'index')
+     return
+    end
     post.destroy
     redirect_to(:controller => 'home' ,:action => 'index')
   end
