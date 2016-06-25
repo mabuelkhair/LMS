@@ -30,6 +30,12 @@ class CoursesController < ApplicationController
     if @course.privacy=="public" then
       if  !(@course.students.include? current_user or @course.owner.id==current_user.id) then
         @course.students << current_user
+
+        fields_of_interest = @course.tags.split(/,/)
+        fields_of_interest.each do |tag|
+          current_user.interests.create(name: tag)  
+        end
+
       end
     end
   end
