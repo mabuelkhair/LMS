@@ -1,3 +1,9 @@
+.navbar-brand{
+  border-right-color: transparent !important;
+}
+tr{
+  white-space: nowrap
+}
 .profile-img{
   max-width: 100px;
 }
@@ -9000,6 +9006,9 @@ div.datepicker th {
 input[type=file]:focus {
   outline: 0 !important;
   outline-offset: 0 !important;
+}
+input[type=file]{
+  padding-bottom: 50px;
 }
 input[type=checkbox]:focus,
 input[type=radio]:focus,

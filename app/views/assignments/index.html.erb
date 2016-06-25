@@ -1,6 +1,6 @@
 <% if !in_course() then controller.redirect_to courses_path end%>
 <body class="breakpoint-1024">
-    <div class="container-fluid">
+    <div class="container-fluid" style="width: 700px;">
         <div class="page-header">
             <h1 style="text-align: center;">Assignments</h1>
             <div class="clearfix"></div>
@@ -21,7 +21,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="media media-clearfix-xs-min">
-                        <div class="media-left"><a href=""><span class="media-object icon-block bg-default"><i class="fa fa-github"></i></span></a></div>
+                        <div class="media-left"><a href=""><span class="media-object icon-block bg-body"><i class="fa fa-clipboard"></i></span></a></div>
                         <div class="media-body">
                             <h3 class="media-heading h4"><%= assignment.name %></h3>
                             <% if current_user.id==assignment.course.owner.id %>
@@ -60,7 +60,7 @@
                                         <p style="text-align: right">You have submit the assignment</p>
                                         <% solution=Solution.where(:course_id => @course.id , :assignment_id => assignment.id ).first%>
                                 <%if solution.grade.nil? then %>
-                                <p style='font-size: 20px;text-align: right'>Grade: Not graded yet</p>
+                                <p style='font-size: 20px;text-align: right'>Grade: No grade</p>
                                 <%else%>
                                     <p style='font-size: 20px;text-align: right'>Grade:
                                         <%=solution.grade%>

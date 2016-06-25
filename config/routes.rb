@@ -52,9 +52,12 @@ Rails.application.routes.draw do
     resources :announcements
     resources :assignments do
       resources :solutions
+    end
   end
-  end
-  get 'home/index'
+
+  get 'home/index' , :as => :post
+  put 'home/index.:id' => 'home#update'
+  patch 'home/index.:id' => 'home#update'
 
   get 'home/about'
 

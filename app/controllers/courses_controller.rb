@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: [:reject_request,:accept_request,:show, :edit, :update, :destroy,:join_course,:join_request,:join_requests]
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
 
   def related_courses
     filed_of_intrests = @course.tags.split(/,/)
@@ -23,17 +23,25 @@ class CoursesController < ApplicationController
   helper_method :related_courses
 
   def join_course
+    authenticate_user!
     
     redirect_to(:action => 'show')
 
     if @course.privacy=="public" then
       if  !(@course.students.include? current_user or @course.owner.id==current_user.id) then
         @course.students << current_user
+
+        fields_of_interest = @course.tags.split(/,/)
+        fields_of_interest.each do |tag|
+          current_user.interests.create(name: tag)  
+        end
+
       end
     end
   end
 
   def join_requests
+    authenticate_user!
     if current_user.id==@course.owner.id then
       @requests = JoinRequest.where(:course_id => @course.id )
       @requesters = Hash.new
@@ -45,6 +53,7 @@ class CoursesController < ApplicationController
   end
 
   def join_request
+    authenticate_user!
     redirect_to(:action => 'show')
     if @course.privacy=="private" then
       if !(@course.students.include? current_user or @course.owner.id==current_user.id) then
@@ -56,17 +65,25 @@ class CoursesController < ApplicationController
   end
 
   def accept_request
-
+    authenticate_user!
     redirect_to(:action => 'join_requests')
     if current_user.id == @course.owner_id
      req_id=params[:requester_id]
-     @course.students << User.find(req_id)
+
+     requester = User.find(req_id)
+     @course.students << requester
+
+     fields_of_interest = @course.tags.split(/,/)
+        fields_of_interest.each do |tag|
+          requester.interests.create(name: tag)  
+      end
+      
      JoinRequest.where(:course_id =>@course.id,:requester_id => req_id).destroy_all
    end
   end
 
   def reject_request
-
+    authenticate_user!
     redirect_to(:action => 'join_requests')
     if current_user.id == @course.owner_id
      req_id=params[:requester_id]
@@ -75,10 +92,12 @@ class CoursesController < ApplicationController
   end
 
   def studying
+    authenticate_user!
     @courses=current_user.courses
   end
 
   def mycourses
+    authenticate_user!
     @courses =Course.where("owner_id = ?", current_user.id);
   end
 
@@ -91,15 +110,18 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
+    # authenticate_user!
   end
 
   # GET /courses/new
   def new
+    authenticate_user!
     @course= Course.new
   end
 
   # GET /courses/1/edit
   def edit
+    authenticate_user!
     if current_user.id!=@course.owner.id
       respond_to do |format|
         format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
@@ -111,6 +133,7 @@ class CoursesController < ApplicationController
   # POST /courses
   # POST /courses.json
   def create
+    authenticate_user!
     @course= Course.new(course_params)
     @course.owner_id=current_user.id
     respond_to do |format|
@@ -127,6 +150,7 @@ class CoursesController < ApplicationController
   # PATCH/PUT /courses/1
   # PATCH/PUT /courses/1.json
   def update
+    authenticate_user!
     if current_user.id!=@course.owner.id
       respond_to do |format|
         format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
@@ -147,6 +171,7 @@ class CoursesController < ApplicationController
   # DELETE /courses/1
   # DELETE /courses/1.json
   def destroy
+    authenticate_user!
         if current_user.id!=@course.owner.id
       respond_to do |format|
         format.html { redirect_to :action => 'index' ,:controller=>"courses", notice: 'You are Not Authorized' }
@@ -168,6 +193,6 @@ class CoursesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
-      params.require(:course).permit(:name, :description, :privacy, :tags, :objectives,:owner_id, :prerequisites)
+      params.require(:course).permit(:name, :description, :privacy, :tags, :objectives,:owner_id, :prerequisites,:avatar)
     end
 end

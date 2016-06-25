@@ -1,6 +1,11 @@
 module CoursesHelper
 	def in_course
-		ret= (@course.students.include? current_user or @course.owner.id==current_user.id)
+		if current_user then
+			ret= (@course.students.include? current_user or @course.owner.id==current_user.id)
+		else
+			ret=false
+		end
+		ret
 	end
 	def is_public
 		  if @course.privacy=="public" then

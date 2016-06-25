@@ -1,45 +1,70 @@
 <div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-body">
-            <div class="media"><span class="pull-right icon-block double media-object bg-lightred"><i class="fa fa-github"></i></span>
+            <div class="media">
+            <span class="pull-right icon-block double media-object">
+            <% if @course.avatar.url.present? == true then %>
+                    <img src=<%=@course.avatar.url%> alt="" class="profile-img">
+            <% else %>
+                <span class="pull-right icon-block double media-object bg-lightred">
+                    <i class="fa fa-book"></i>
+                </span>
+            <% end %>
+            </span>
+            <% if current_user.id == @course.owner.id  || current_user.is_admin==1 %>
+            <span class="pull-right">
+                <%= form_for @course, html: { multipart: true } do |f| %>
+                <%= f.file_field :avatar ,:required => true %>
+                <%= f.submit "Change avatar", class: "btn btn-primary"  %>
+            <% end %>
+            <% end %>
+            </span>
                 <div class="media-body">
                     <h3 class="media-heading h4"><%=@course.name%> </h3>
-                    <% if current_user.id==@course.owner.id ||current_user.is_admin==1%>
-                        <%= link_to 'Edit', edit_course_path(@course) %> &nbsp;
-                            <%= link_to 'Destroy', @course, method: :delete, data: { confirm: 'Are you sure?' } %>
-                                <% end %>
-                                    <p class="small text-muted">
-                                        <i class="fa fa-clock-o fa-fw"></i>
-                                        <%=@course.privacy%>
-                                            <i class="fa fa-user fa-fw"></i>
-                                            <%=@course.owner.email%>
-                                                <i class="fa fa-calendar fa-fw"></i>
-                                                <%=@course.created_at%>
-                                    </p>
-                                    <p>
-                                        <%=@course.description%>
-                                    </p>
-                                    <% @course.tags.split(",").each do |tag| %>
-                                        <span class="label label-default"><%=tag%></span>
-                                        <%end%>
+                    <% if current_user %>
+                        <% if current_user.id==@course.owner.id ||current_user.is_admin==1%>
+                            <%= link_to 'Edit', edit_course_path(@course) %> &nbsp;
+                                <%= link_to 'Destroy', @course, method: :delete, data: { confirm: 'Are you sure?' } %>
+                                    <% end %>
+                                    <%end%>
+                            <p class="small text-muted">
+                                <i class="fa fa-clock-o fa-fw"></i>
+                                <%=@course.privacy%>
+                                    <i class="fa fa-user fa-fw"></i>
+                                    <%=@course.owner.email%>
+                                        <i class="fa fa-calendar fa-fw"></i>
+                                        <%=@course.created_at%>
+                            </p>
+                            <p>
+                                <%=@course.description%>
+                            </p>
+                            <% @course.tags.split(",").each do |tag| %>
+                                <span class="label label-default"><%=tag%></span>
+                        <%end%>
                 </div>
             </div>
 
-            <%if current_user.id==@course.owner.id&&@course.privacy=="private"%>
-            <a href="/courses/<%=@course.id%>/requesters"> <input class="btn btn-primary btn-ms" type="submit" value="Requesters">
+            <% if current_user %>
+                <%if current_user.id==@course.owner.id&&@course.privacy=="private"%>
+                    <a href="/courses/<%=@course.id%>/requesters"> <input class="btn btn-primary btn-ms" type="submit" value="Requesters">
+                <%end%>
             <%end%>
 
-            <%if !in_course() and is_public() then%>
-            <a href="/courses/<%=@course.id%>/join"> <input class="btn btn-primary btn-ms" type="submit" value="Join Course">
-            </a>
+            <%if !current_user then %>
+                <a href="/courses/<%=@course.id%>/join"> <input class="btn btn-primary btn-ms" type="submit" value="Join Course">
+            <%elsif !in_course()  and is_public() then%>
+                <a href="/courses/<%=@course.id%>/join"> <input class="btn btn-primary btn-ms" type="submit" value="Join Course">
+                </a>
             <%end%>
 
-            <%if !in_course() and !is_public()  then%>
-                <%if !is_requested_before() %>
-                    <a href="/courses/<%=@course.id%>/joinrequest"> <input class="btn btn-primary btn-ms" type="submit" value="Join request">
-                    </a>
-                <%else%>
-                    <input class="btn btn-primary btn-ms" type="submit" value="request sent" disabled/>
+            <% if current_user %>
+                <%if !in_course() and !is_public()  then%>
+                    <%if !is_requested_before() %>
+                        <a href="/courses/<%=@course.id%>/joinrequest"> <input class="btn btn-primary btn-ms" type="submit" value="Join request">
+                        </a>
+                    <%else%>
+                        <input class="btn btn-primary btn-ms" type="submit" value="request sent" disabled/>
+                    <%end%>
                 <%end%>
             <%end%>
             <%if in_course() then%>
@@ -51,21 +76,23 @@
             </a>
         </div>
     </div>
-    <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
-    <div class="panel panel-default">
-        <div class="panel-body">
-                <h3>New Chapter</h3>
-                <%= form_tag "/chapters", :name => "new_chapter" do %>
-                    <label>Name</label>
-                    <input type="text" class="form-control" name="chapter[name]" placeholder="Name">
-                    <label>Description</label>
-                    <textarea class="form-control" name="chapter[description]" placeholder="description"></textarea>
-                    <input class="btn btn-primary btn-lg" type="submit" value="Create chapter">
-                    <input type="hidden" name="chapter[course_id]" value="<%=@course.id%>">
-                <% end %>
-                        
+    <% if current_user %>
+        <% if current_user.id==@course.owner.id ||current_user.is_admin==1 %>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                    <h3>New Chapter</h3>
+                    <%= form_tag "/chapters", :name => "new_chapter" do %>
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="chapter[name]" placeholder="Name">
+                        <label>Description</label>
+                        <textarea class="form-control" name="chapter[description]" placeholder="description"></textarea>
+                        <input class="btn btn-primary btn-lg" type="submit" value="Create chapter">
+                        <input type="hidden" name="chapter[course_id]" value="<%=@course.id%>">
+                    <% end %>
+                            
+            </div>
         </div>
-    </div>
+        <% end %>
     <% end %>
     <div class="panel panel-default">
         <div class="panel-body">

@@ -14,14 +14,7 @@
     <div class="navbar navbar-main navbar-primary navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a href="#sidebar-chat" data-toggle="sidebar-menu" class="toggle pull-right visible-xs"><i class="fa fa-comments"></i></a>
-          <a class="navbar-brand" href="/home/index">Learning</a>
+          <a class="navbar-brand" href="/home/index">FCILMS</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -29,24 +22,34 @@
           <ul class="nav navbar-nav">
             
             <li><a href="/courses">All Courses</a></li>
+            <% if user_signed_in? -%>
             <li><a href="/journal/browse">Journal</a></li>
+            <% else %>
             <li><a href="/home/about">About</a></li>
             <li><a href="/home/contact">Contact</a></li>
-            </li>
+            <% end %>
           </ul>
+
           <ul class="nav navbar-nav navbar-right">
-            <!--<li class="hidden-xs">
-              <a href="#sidebar-chat" data-toggle="sidebar-menu">
-                <i class="fa fa-comments"></i>
-              </a>
-            </li>-->
-            
             
             <% if user_signed_in? -%>
             <li><a href="/courses/mycourses">My Courses</a></li>
             <li><a href="/courses/studying">Studying</a></li>
-            
-            <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %> </li>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle user" data-toggle="dropdown" style="padding-top: 0;">
+              <% if current_user.avatar.url.present? == true then %>
+                      <img src=<%=current_user.avatar.url%> alt=""class="img-circle" width="40">
+              <% else %>
+                        <img src="/login.png" alt="" class="img-circle" width="40">
+              <% end %>
+              <%=current_user.email.split(/@/).first %> <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/user/profile">Profile</a></li>
+                <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+              </ul>
+            </li>
             <% else %>
 
             <li><a href="/users/sign_in">Log In</a></li>
@@ -62,47 +65,12 @@
 <%= yield %>
 </div>
   <footer class="footer">
-      <strong>FCI-LMS</strong> v1.0.0 &copy; Copyright 2015
+      <strong>FCI-LMS</strong> v1.0.0 &copy; Copyright 2015 <a href="/home/contact">Contact</a> | <a href="/home/about"> About</a>
+      <ul>
+        <li></li>
+        <li></li>
+      </ul>
     </footer>
 </div>
-  <script>
-    var colors = {
-      "danger-color": "#e74c3c",
-      "success-color": "#81b53e",
-      "warning-color": "#f0ad4e",
-      "inverse-color": "#2c3e50",
-      "info-color": "#2d7cb5",
-      "default-color": "#6e7882",
-      "default-light-color": "#cfd9db",
-      "purple-color": "#9D8AC7",
-      "mustard-color": "#d4d171",
-      "lightred-color": "#e15258",
-      "body-bg": "#f6f6f6"
-    };
-    var config = {
-      theme: "learning",
-      skins: {
-        "default": {
-          "primary-color": "#16ae9f"
-        },
-        "orange": {
-          "primary-color": "#e74c3c"
-        },
-        "blue": {
-          "primary-color": "#4687ce"
-        },
-        "purple": {
-          "primary-color": "#af86b9"
-        },
-        "brown": {
-          "primary-color": "#c3a961"
-        }
-      }
-    };
-  </script>
-  <!--
-  <script src="js/vendor/all.js"></script>
-  <script src="js/app/app.js"></script>
-  -->
 </body>
 </html>

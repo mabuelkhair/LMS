@@ -11,6 +11,7 @@ gem 'bootstrap-sass', '~> 2.3.2'
 gem "font-awesome-rails"
 gem 'rails', '4.2.4'
 gem "httparty"
+gem 'rmagick'
 # Addressable
 gem "addressable"
 # OpenStruct

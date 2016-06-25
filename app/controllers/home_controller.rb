@@ -24,6 +24,29 @@ class HomeController < ApplicationController
     redirect_to(:controller => 'home' ,:action => 'index')
   end
 
+
+  def update
+    params.permit!
+    @post = Post.find(params[:id])
+
+    respond_to do |format|
+      if @post.update_attributes(params[:post])
+        format.html { redirect_to(@post, :notice => 'Post was successfully updated.') }
+        format.json { respond_with_bip(@post) }
+      else
+        format.html { render :action => "edit" }
+        format.json { respond_with_bip(@post) }
+      end
+    end
+  end
+
+  private
+  def post_params
+    params.require(:post).permit!
+  end
+
+
+
   def about
   end
 
