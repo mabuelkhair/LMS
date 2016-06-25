@@ -17,9 +17,6 @@ class HomeController < ApplicationController
    def delete_post
     authenticate_user!
     post= current_user.post.find(params[:id])
-    rescue ActiveRecord::RecordNotFound  
-     redirect_to :controller => "home", :action => "index"
-    return
     post.destroy
     redirect_to(:controller => 'home' ,:action => 'index')
   end
