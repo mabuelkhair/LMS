@@ -102,14 +102,23 @@
                   <%= f.select :number_of_options, ['2','3','4','5','6','7','8'],:class => 'form-control'%>
          <h4 style="color: black">Options(first one is the correct one):</h4>
          		  <%= f.hidden_field :id, :value => question.id %>
+                  <br>
                   Answer1: <%= f.text_field :answer1 %>
+                  <br><br>
                   Answer2: <%= f.text_field :answer2 %>
+                  <br><br>
                   Answer3: <%= f.text_field :answer3 %>
-                  Answer4: <%= f.text_field :answer4 %><br/>
+                  <br><br>
+                  Answer4: <%= f.text_field :answer4 %>
+                  <br><br>
                   Answer5: <%= f.text_field :answer5 %>
+                  <br><br>
                   Answer6: <%= f.text_field :answer6 %>
+                  <br><br>
                   Answer7: <%= f.text_field :answer7 %>
-                  Answer8: <%= f.text_field :answer8 %><br/>
+                  <br><br>
+                  Answer8: <%= f.text_field :answer8 %>
+                  <br><br>
                   <%= f.label :question_weight %><br />
                   <%= f.number_field :weight, :class => 'text_field', :step => 'any' %>
                   
