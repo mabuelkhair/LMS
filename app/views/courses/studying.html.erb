@@ -1,5 +1,5 @@
 <body class="breakpoint-1024">
-        <div class="container-fluid">
+        <div class="container" style="width: 700px;">
             <div class="page-header">
                 <h1 class="h3 pull-left margin-none">Courses</h1>
                 
@@ -22,7 +22,13 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="media media-clearfix-xs-min">
-                        <div class="media-left"><a href="http://themekit.aws.ipv4.ro/dist/themes/learning/lesson.html"><span class="media-object icon-block bg-default"><i class="fa fa-book"></i></span></a></div>
+                        <div class="media-left"><a href="http://themekit.aws.ipv4.ro/dist/themes/learning/lesson.html"><span class="media-object icon-block bg-default">
+                            
+                        <% if course.avatar.url.present? == true then %>
+                          <img src=<%=course.avatar.url%> alt="" class="img-responsive">
+                        <% end %>
+
+                        <i class="fa fa-book"></i></span></a></div>
                         <div class="media-body">
                             <h3 class="media-heading h4"><%= link_to  course.name , course%> </h3>
                             <% if current_user.id==course.owner.id || current_user.is_admin==1 %>
