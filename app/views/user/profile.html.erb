@@ -13,8 +13,6 @@
             <% else %>
                       <img src="/login.png" alt="" class="profile-img">
             <% end %>
-            
-            <br>
             <% if @guest == false then %>
             <center>
               <%= form_for @user, html: { multipart: true } do |f| %>

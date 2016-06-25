@@ -11,7 +11,7 @@
                 </span>
             <% end %>
             </span>
-            <% if current_user %>
+            <% if current_user.id == @course.owner.id  || current_user.is_admin==1 %>
             <span class="pull-right">
                 <%= form_for @course, html: { multipart: true } do |f| %>
                 <%= f.file_field :avatar ,:required => true %>
