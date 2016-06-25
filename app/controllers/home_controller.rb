@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   
   def index
   	if current_user
-      @posts= Post.where("user_id IN(?) OR user_id = ?",Follow.select(:followable_id).where(:follower_id => 11), User.first.id).order("created_at DESC")
+      @posts= Post.where("user_id IN(?) OR user_id = ?",Follow.select(:followable_id).where(:follower_id => current_user.id), current_user.id).order("created_at DESC")
       render :feed
 	  end
   end
